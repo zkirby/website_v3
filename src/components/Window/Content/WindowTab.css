@@ -1,0 +1,42 @@
+.exit-tab {
+	color: red;
+	position: relative;
+	cursor: pointer;
+	font-weight: 700;
+	font-size: 8px;
+	top: -4px;
+    left: 14px;
+	display: inline-block;
+}
+
+.icon-tab {
+	height: 10px;
+	width: 10px;
+	position: relative;
+	background: pink;
+	display: inline-block;
+	top: -2px;
+    left: -13px;
+}
+
+.name-tab {
+	display: inline-block;
+	font-size: 12px;
+	color: white;
+	position: relative;
+	top: -3px;
+    left: -8px;
+}
+
+.tab {
+	position: relative;
+	border-bottom: 100px solid green;
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+	height: 0;
+	width: 100px;
+	right: 50px;
+	top: 100px;
+	border-radius: 100px;
+	display: inline-block;
+}

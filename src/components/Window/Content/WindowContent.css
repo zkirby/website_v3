@@ -1,0 +1,21 @@
+.WindowContent {
+	height: 400px;
+	width: 500px;
+	position: absolute;
+}
+.search {
+	width: 500px;
+	background: blue;
+	height: 15px;
+	top: 15px;
+	position: relative;
+	z-index: 10;
+}
+
+.content {
+	background: red;
+	height: 300px;
+	width: 500px;
+	position: relative;
+	border-radius: 5px;
+}
