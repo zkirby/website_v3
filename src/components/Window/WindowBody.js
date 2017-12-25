@@ -32,7 +32,15 @@ class WindowBody extends Component {
     });
 
     this.props.spawn_default_window();
-    this.props.spawn_default_window();
+
+    
+   
+    // document.onkeypress = (e) => {
+    //   if (e.keyCode === 14 && this.windows.length < 5) {
+    //     console.log("YES");
+    //     this.props.spawn_default_window();
+    //   }
+    // }
   }
 
   componentWillUnmount() {
@@ -53,7 +61,7 @@ class WindowBody extends Component {
 
     if (this.windows.length === 0) {
       return (
-        <div className="new-tab-text">Press cmd+t to open a new tab</div>
+        <div className="new-tab-text">Press control+n to open a new window</div>
         );
     } else {
       return (

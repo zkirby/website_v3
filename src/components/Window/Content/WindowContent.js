@@ -23,13 +23,10 @@ class WindowContent extends Component {
 		this.subsciption = 
 		store.subscribe(() => {
 			this.current_tabs = store.getState().live_tabs[this.props.wid];
+			this.active_window = store.getState().active_window;
 		});
 
-		let tab_id = Symbol();
-		this.props.spawnTab([
-			tab_id, <WindowTab name="default tab" tid={ tab_id } key={ uuidv1() } wid={ this.props.wid }/> 
-		]);
-
+		this.props.spawnDefaultTab();
 		this.initial_render = true;
 	}
 
@@ -40,27 +37,46 @@ class WindowContent extends Component {
 	componentWillUpdate() {
 		let tab_bodies = [];
 
-		if (this.initial_render) {
-			for (let val of this.current_tabs) {
-		      tab_bodies.push(val[1]);
-		    }
+		for (let val of this.current_tabs) {
+	      tab_bodies.push(val[1]);
+	    }
 
-			if (tab_bodies.length === 0) {
-				this.props.killWindow();
+		if (tab_bodies.length === 0) {
+			this.props.killWindow();
+		}
+	
+		this.tab_bodies = tab_bodies;
+
+		/*
+		A jank fix... not sure how to abstract this correctly
+		so for right now there is only one onkeypress and it 
+		handles everything. Really don't like how windows are created from
+		the window_content, but that's how it's gotta be for right now. 
+		*/
+
+		// Create window on key down event
+		// control + w = kill tab (23)
+    	// control + t = new tab (20)
+    	// control + n = new window (14)
+		document.onkeypress = (e) => {
+			let is_active = this.active_window === this.props.wid;
+			if (e.keyCode === 23) {
+				// Need to kill active tab
+				console.log(this.tab_bodies);
+			} else if (e.keyCode === 20 && is_active) {
+				this.props.spawnDefaultTab();
 			}
 		}
-		this.tab_bodies = tab_bodies;
 	}
 
 	hasFocus() {
-		console.log("I've been focused");
+		this.props.setActive();
 	}
 
 	render() {	
-		
 		return (
 			<Draggable id="drag">
-		      	<div className="WindowContent" onClick={this.hasFocus}>
+		      	<div className="WindowContent" onClick={(e)=>{this.hasFocus(e)}}>
 		      		<div className="tab-spine">
 		      			{ this.tab_bodies }
 		      		</div>
@@ -96,6 +112,23 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     			id: ownProps.wid,
     			content: tab_body
     		}
+    	})
+    },
+    spawnDefaultTab: () => {
+    	let tab_id = Symbol();
+    	dispatch({
+    		type:"SPAWN-TAB",
+    		payload: {
+    			id: ownProps.wid,
+    			content: [ tab_id, 
+    			<WindowTab name="default tab" tid={ tab_id } key={ uuidv1() } wid={ ownProps.wid }/> ]
+    		}
+    	})
+    },
+    setActive: () => {
+    	dispatch({
+    		type:"NEW-ACTIVE-WINDOW",
+    		payload: ownProps.wid
     	})
     }
   }
