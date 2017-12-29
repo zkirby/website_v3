@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import Rnd from 'react-rnd';
 import { connect } from 'react-redux';
 import uuidv1 from 'uuid/v1';
-//import Resizable from 're-resizable';
 import keydown from 'react-keydown';
 
 import WindowTab from './WindowTab';
 import store from '../../../reducers/store';
+import contentList from '../../Websites/WebsiteMasterList';
 
 import './WindowContent.css';
 
@@ -24,6 +24,7 @@ class WindowContent extends Component {
 			         	curr_height: 350,
 			         	curr_width: 500
 			         };
+			         
 		// needed for ctrl+t/w 
 		this.prev_key = 0;
 	}
@@ -75,7 +76,7 @@ class WindowContent extends Component {
 						}
 						break;
 					case (87):
-						this.props.killTab(this.state.active_tab);
+						this.props.killTab(this.state.active_tab[0]);
 						break;
 					default:
 						this.prev = curr_key;
@@ -92,8 +93,9 @@ class WindowContent extends Component {
 	}
 
 	render() {	
+
 		return (
-			<Rnd default={{x: 300, y: 200, height: 350, width: 500}} 
+			<Rnd default={{x: 630, y: 0, height: 350, width: 500}} 
 			     onResize={(e, direction, ref, delta, position)=>{
 				this.setState({
 					curr_width: ref.offsetWidth,
@@ -105,12 +107,14 @@ class WindowContent extends Component {
 		      			{ this.tab_bodies }
 		      		</div>
 		      		<div className="search" style={{width: this.state.curr_width + "px"}}>
-		      			<div className="search-content" style={{width: (this.state.curr_width - 90) + "px"}}> https://home.com </div>
+		      			<div className="search-content" style={{width: (this.state.curr_width - 90) + "px"}}> 
+		      				<div style={{width: '100%', height: '100%', top: '-1px', position: 'relative'}}>https://{ this.state.active_tab === undefined ? "" : this.state.active_tab[1] }.com</div>
+		      			 </div>
 		      		</div>
 		      		<div className="content" 
 		      			style={{width: this.state.curr_width + "px",
 		      					height: this.state.curr_height-40 + "px" }}>
-		      			
+		      			{ this.state.active_tab === undefined ? "" : contentList[this.state.active_tab[1]] }
 		      		</div>
 		      	</div>
 		   	</Rnd>
@@ -146,15 +150,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     spawnDefaultTab: () => {
     	let tab_id = Symbol();
+    	let tab_url = "home";
     	dispatch({
     		type:"SPAWN-TAB",
     		payload: {
     			id: ownProps.wid,
     			content: [ tab_id, 
-    			<WindowTab name="default tab" tid={ tab_id } key={ uuidv1() } wid={ ownProps.wid }/> ]
+    			<WindowTab name="default tab" tid={ tab_id } key={ uuidv1() } wid={ ownProps.wid } tab_url={ tab_url } /> ]
     		}
     	})
-    	return tab_id;
+    	return [tab_id, tab_url];
     },
     setActive: () => {
     	dispatch({
@@ -171,12 +176,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         }
     	})
     },
-    focusTab: (tab_id) => {
+    focusTab: (tab) => {
       dispatch({
         type:"NEW-ACTIVE-TAB",
         payload: {
           window_id: ownProps.wid,
-          tab_id: tab_id
+          tab: tab
         }
       })
     }

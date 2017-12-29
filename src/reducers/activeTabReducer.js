@@ -4,7 +4,7 @@ const activeTabReducer = function(state, action) {
 
 	if (type === "NEW-ACTIVE-TAB") {
 		let new_state = Object.assign({}, state);
-		new_state[action.payload.window_id] = action.payload.tab_id;
+		new_state[action.payload.window_id] = action.payload.tab;
 		return new_state;
 
 	} else if (state === undefined) {

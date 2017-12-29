@@ -11,7 +11,7 @@ import controls from './controlReducer';
 Live Windows   = obj: { window_id: window_jsx }
 Live Tabs      = obj: { window_id: [[ tab_id, tab_jsx ], [ tab_id, tab_jsx ]] }
 Active Content = obj: { tab_id: content_jsx }
-Active Tab     = obj: { window_id: tab_id }
+Active Tab     = obj: { window_id: [tab_id, tab_url] }
 Active Window  = int: window_id
 Controls       = obj: { cntrl_signal: int }
 */

@@ -7,7 +7,7 @@
 .search {
 	/*width: 500px;*/
 	background: #456990;
-	height: 17px;
+	height: 20px;
 	top: 15px;
 	position: relative;
 	z-index: 10;
@@ -15,13 +15,13 @@
 
 .search-content {
 	/*width: 400px;*/
-	height: 14px;
+	height: 16px;
 	top: 1px;
 	position: relative;
 	border-radius: 2px;
 	background: #EEF0F2;
 	left: 35px;
-	font-size: 12px;
+	font-size: 13px;
 	text-align: left;
 	padding-left: 10px;
 	color: #49BEAA;
