@@ -24,6 +24,9 @@ class WindowBody extends Component {
 
     this.live_windows = this.props.live_windows;
     this.windows = [];
+
+    // needed for ctrl+n
+    this.prev = 0;
   }
 
   componentDidMount() {
@@ -32,13 +35,12 @@ class WindowBody extends Component {
     });
 
     this.props.spawn_default_window();
-       
-    // document.onkeypress = (e) => {
-    //   if (e.keyCode === 14 && this.windows.length < 5) {
-    //     console.log("YES");
-    //     this.props.spawn_default_window();
-    //   }
-    // }
+
+    document.onkeypress = (e) => {
+      if (e.keyCode === 14 && this.windows.length < 3) {
+        this.props.spawn_default_window();
+      }
+    }
   }
 
   componentWillUnmount() {

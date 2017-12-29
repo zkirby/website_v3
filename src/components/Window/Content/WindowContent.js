@@ -3,11 +3,13 @@ import Draggable from 'react-draggable';
 import { connect } from 'react-redux';
 import uuidv1 from 'uuid/v1';
 //import Resizable from 're-resizable';
+import keydown from 'react-keydown';
 
 import WindowTab from './WindowTab';
 import store from '../../../reducers/store';
 
 import './WindowContent.css';
+
 
 class WindowContent extends Component {
 
@@ -20,7 +22,8 @@ class WindowContent extends Component {
 			         	current_tabs: this.props.current_tabs,
 			         	active_tab: this.props.active_tab
 			         };
-
+		// needed for ctrl+t/w 
+		this.prev_key = 0;
 	}
 
 	componentDidMount() {
@@ -54,36 +57,31 @@ class WindowContent extends Component {
 		}
 	
 		this.tab_bodies = tab_bodies;
+	}
 
-		/*
-		A jank fix... not sure how to abstract this correctly
-		so for right now there is only one onkeypress and it 
-		handles everything. Really don't like how windows are created from
-		the window_content, but that's how it's gotta be for right now. 
-		*/
+	componentWillReceiveProps( { keydown } ) {
+		if (keydown.event) {
+			let curr_key = keydown.event.which;
+			let is_active = this.state.active_window === this.props.wid;
 
-		// Create window on key down event
-		// control + w = kill tab (23)
-    	// control + t = new tab (20)
-    	// control + n = new window (14)
-		document.onkeypress = (e) => {
-			let is_active = nextState.active_window === this.props.wid;
-			if (is_active) {
-				if (e.keyCode === 23) {
-					// Kill the most recently used tab
-					this.props.killTab(nextState.active_tab);
-				} else if (e.keyCode === 20 && this.tab_bodies.length < 5) {
-					// Spawn a defualt tab
-					this.props.spawnDefaultTab();
+			// If a ctrl was issued and we are working with in an active state
+			if (this.prev === 17 && is_active) {
+				switch (curr_key) {
+					case (84): 
+						if (this.tab_bodies.length < 3) {
+							this.props.spawnDefaultTab();
+						}
+						break;
+					case (87):
+						this.props.killTab(this.state.active_tab);
+						break;
+					default:
+						this.prev = curr_key;
+						break;
 				}
-			}
-			// Don't like this... the window shouldn't know
-			// how to spawn other windows... it's def an abstraction
-			// break, will fix in the future.
-			if (e.keyCode === 14) {
-				//this.props.spawn_default_window();
-				console.log("HELP")
-			}
+			} else {
+				this.prev = curr_key;
+			}	
 		}
 	}
 
@@ -119,10 +117,6 @@ const mapStateToProps = (state, ownProps) => ({
 
 });
 
-
-// I don't like this! Just look at how much 
-// of the store is being edited by this 
-// component alone !!
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     killWindow: () => {
@@ -179,7 +173,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(WindowContent);
+export default keydown(connect(mapStateToProps, mapDispatchToProps)(WindowContent));
 
 
 /* 
