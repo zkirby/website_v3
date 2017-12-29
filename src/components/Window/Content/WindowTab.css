@@ -1,42 +1,51 @@
 .exit-tab {
-	color: red;
+	color: #EF767A;
 	position: relative;
 	cursor: pointer;
 	font-weight: 700;
 	font-size: 8px;
-	top: -4px;
-    left: 14px;
+	top: -2px;
+    left: 28px;
 	display: inline-block;
+	font-family: 'Istok Web', sans-serif;
 }
 
 .icon-tab {
 	height: 10px;
 	width: 10px;
 	position: relative;
-	background: pink;
+	background: #EF767A;
 	display: inline-block;
-	top: -2px;
-    left: -13px;
+	top: -1px;
+    left: -29px;
 }
 
 .name-tab {
 	display: inline-block;
 	font-size: 12px;
-	color: white;
+	color: #EEF0F2;
 	position: relative;
-	top: -3px;
-    left: -8px;
+	top: -2px;
+    left: -22px;
+    cursor: default;
 }
 
 .tab {
-	position: relative;
-	border-bottom: 100px solid green;
-	border-left: 50px solid transparent;
-	border-right: 50px solid transparent;
-	height: 0;
-	width: 100px;
-	right: 50px;
-	top: 100px;
-	border-radius: 100px;
-	display: inline-block;
+    border-bottom: 23px solid #49BEAA;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    height: 0;
+    width: 130px;
+    right: 148px;
+    top: 100px;
+    opacity: 0.5;
+    float: left;
+}
+
+.tab:hover {
+	opacity: 1;
+}
+
+.full_opacity {
+	opacity: 1;
 }

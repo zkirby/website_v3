@@ -32,9 +32,7 @@ class WindowBody extends Component {
     });
 
     this.props.spawn_default_window();
-
-    
-   
+       
     // document.onkeypress = (e) => {
     //   if (e.keyCode === 14 && this.windows.length < 5) {
     //     console.log("YES");

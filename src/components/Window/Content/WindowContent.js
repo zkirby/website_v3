@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import { connect } from 'react-redux';
 import uuidv1 from 'uuid/v1';
+//import Resizable from 're-resizable';
 
 import WindowTab from './WindowTab';
 import store from '../../../reducers/store';
@@ -14,30 +15,37 @@ class WindowContent extends Component {
 		super(props);
 		this.props = props;
 
-		this.current_tabs = this.props.current_tabs;
-		this.initial_render = this.current_tabs !== undefined;
+		this.state = {
+			         	active_window: this.props.active_window, 
+			         	current_tabs: this.props.current_tabs,
+			         	active_tab: this.props.active_tab
+			         };
 
 	}
 
 	componentDidMount() {
 		this.subsciption = 
 		store.subscribe(() => {
-			this.current_tabs = store.getState().live_tabs[this.props.wid];
-			this.active_window = store.getState().active_window;
+			let new_state_tabs = store.getState().live_tabs[this.props.wid];
+			let new_active_window = store.getState().active_window;
+			let new_active_tab = store.getState().active_tab[this.props.wid];
+
+			this.setState({ current_tabs: new_state_tabs,
+							active_window: new_active_window,
+							active_tab: new_active_tab });
 		});
 
-		this.props.spawnDefaultTab();
-		this.initial_render = true;
+		this.props.focusTab(this.props.spawnDefaultTab());
 	}
 
 	componentWillUnmount() {
 		this.subsciption();
 	}
 
-	componentWillUpdate() {
+	componentWillUpdate(nextProps, nextState) {
 		let tab_bodies = [];
 
-		for (let val of this.current_tabs) {
+		for (let val of nextState.current_tabs) {
 	      tab_bodies.push(val[1]);
 	    }
 
@@ -59,12 +67,22 @@ class WindowContent extends Component {
     	// control + t = new tab (20)
     	// control + n = new window (14)
 		document.onkeypress = (e) => {
-			let is_active = this.active_window === this.props.wid;
-			if (e.keyCode === 23) {
-				// Need to kill active tab
-				console.log(this.tab_bodies);
-			} else if (e.keyCode === 20 && is_active) {
-				this.props.spawnDefaultTab();
+			let is_active = nextState.active_window === this.props.wid;
+			if (is_active) {
+				if (e.keyCode === 23) {
+					// Kill the most recently used tab
+					this.props.killTab(nextState.active_tab);
+				} else if (e.keyCode === 20 && this.tab_bodies.length < 5) {
+					// Spawn a defualt tab
+					this.props.spawnDefaultTab();
+				}
+			}
+			// Don't like this... the window shouldn't know
+			// how to spawn other windows... it's def an abstraction
+			// break, will fix in the future.
+			if (e.keyCode === 14) {
+				//this.props.spawn_default_window();
+				console.log("HELP")
 			}
 		}
 	}
@@ -80,7 +98,9 @@ class WindowContent extends Component {
 		      		<div className="tab-spine">
 		      			{ this.tab_bodies }
 		      		</div>
-		      		<div className="search"></div>
+		      		<div className="search">
+		      			<div className="search-content"> https://home.com </div>
+		      		</div>
 		      		<div className="content">
 		      			
 		      		</div>
@@ -93,10 +113,16 @@ class WindowContent extends Component {
 const mapStateToProps = (state, ownProps) => ({
 
 	current_tabs: state.live_tabs[ownProps.wid],
-	current_content: state.active_content
+	current_content: state.active_content,
+	active_window: state.active_window,
+	active_tab: state.active_tab[ownProps.wid]
 
 });
 
+
+// I don't like this! Just look at how much 
+// of the store is being edited by this 
+// component alone !!
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     killWindow: () => {
@@ -124,12 +150,31 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     			<WindowTab name="default tab" tid={ tab_id } key={ uuidv1() } wid={ ownProps.wid }/> ]
     		}
     	})
+    	return tab_id;
     },
     setActive: () => {
     	dispatch({
     		type:"NEW-ACTIVE-WINDOW",
     		payload: ownProps.wid
     	})
+    },
+    killTab: (tab_id) => {
+    	dispatch({
+    		type:"KILL-TAB",
+    		payload: {
+          window_id: ownProps.wid,
+          tab_id: tab_id
+        }
+    	})
+    },
+    focusTab: (tab_id) => {
+      dispatch({
+        type:"NEW-ACTIVE-TAB",
+        payload: {
+          window_id: ownProps.wid,
+          tab_id: tab_id
+        }
+      })
     }
   }
 };

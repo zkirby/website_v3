@@ -1,3 +1,17 @@
+/* 
+	COLORS
+	charcol - #2F4550
+	white   - #EEF0F2
+	blue    - #456990
+	green   - #49BEAA
+	red     - #EF767A
+
+	FONTS 
+	leading - font-family: 'Istok Web', sans-serif;
+	body    - font-family: 'Lora', serif;
+
+
+*/
 .WindowBody {
 	top: 30%;
 	transform: translateY(-50%);

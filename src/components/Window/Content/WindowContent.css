@@ -5,17 +5,40 @@
 }
 .search {
 	width: 500px;
-	background: blue;
-	height: 15px;
+	background: #456990;
+	height: 17px;
 	top: 15px;
 	position: relative;
 	z-index: 10;
 }
 
+.search-content {
+	width: 400px;
+	height: 14px;
+	top: 1px;
+	position: relative;
+	border-radius: 2px;
+	background: #EEF0F2;
+	left: 35px;
+	font-size: 12px;
+	text-align: left;
+	padding-left: 10px;
+	color: #49BEAA;
+	font-family: 'Istok Web', sans-serif;
+}
+
 .content {
-	background: red;
+	background: #EF767A;
 	height: 300px;
 	width: 500px;
 	position: relative;
 	border-radius: 5px;
+}
+
+.tab-spine {
+    height: 23px;
+    width: 463px;
+    top: 19px;
+    position: relative;
+    left: 37px;
 }
