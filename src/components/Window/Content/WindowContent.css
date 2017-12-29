@@ -2,9 +2,10 @@
 	height: 400px;
 	width: 500px;
 	position: absolute;
+	cursor: default;
 }
 .search {
-	width: 500px;
+	/*width: 500px;*/
 	background: #456990;
 	height: 17px;
 	top: 15px;
@@ -13,7 +14,7 @@
 }
 
 .search-content {
-	width: 400px;
+	/*width: 400px;*/
 	height: 14px;
 	top: 1px;
 	position: relative;
@@ -29,8 +30,8 @@
 
 .content {
 	background: #EF767A;
-	height: 300px;
-	width: 500px;
+	/*height: 300px;*/
+	/*width: 500px;*/
 	position: relative;
 	border-radius: 5px;
 }

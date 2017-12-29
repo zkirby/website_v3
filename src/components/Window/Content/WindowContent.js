@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Draggable from 'react-draggable';
+import Rnd from 'react-rnd';
 import { connect } from 'react-redux';
 import uuidv1 from 'uuid/v1';
 //import Resizable from 're-resizable';
@@ -20,7 +20,9 @@ class WindowContent extends Component {
 		this.state = {
 			         	active_window: this.props.active_window, 
 			         	current_tabs: this.props.current_tabs,
-			         	active_tab: this.props.active_tab
+			         	active_tab: this.props.active_tab,
+			         	curr_height: 350,
+			         	curr_width: 500
 			         };
 		// needed for ctrl+t/w 
 		this.prev_key = 0;
@@ -91,19 +93,27 @@ class WindowContent extends Component {
 
 	render() {	
 		return (
-			<Draggable id="drag">
+			<Rnd default={{x: 300, y: 200, height: 350, width: 500}} 
+			     onResize={(e, direction, ref, delta, position)=>{
+				this.setState({
+					curr_width: ref.offsetWidth,
+					curr_height: ref.offsetHeight
+				});
+			}} minWidth="300" minHeight="300">
 		      	<div className="WindowContent" onClick={(e)=>{this.hasFocus(e)}}>
-		      		<div className="tab-spine">
+		      		<div className="tab-spine" style={{width: this.state.curr_width + "px"}}>
 		      			{ this.tab_bodies }
 		      		</div>
-		      		<div className="search">
-		      			<div className="search-content"> https://home.com </div>
+		      		<div className="search" style={{width: this.state.curr_width + "px"}}>
+		      			<div className="search-content" style={{width: (this.state.curr_width - 90) + "px"}}> https://home.com </div>
 		      		</div>
-		      		<div className="content">
+		      		<div className="content" 
+		      			style={{width: this.state.curr_width + "px",
+		      					height: this.state.curr_height-40 + "px" }}>
 		      			
 		      		</div>
 		      	</div>
-		   	</Draggable>
+		   	</Rnd>
     	);
   	}
 }
