@@ -17,6 +17,7 @@ class WindowTab extends Component {
     this.subscription = store.subscribe(() => {
       let new_id = store.getState().active_tab[this.props.wid][0];
       let is_active_tab = new_id === this.props.tid; 
+
       this.setState({is_active_tab});
     });
   }
@@ -29,6 +30,7 @@ class WindowTab extends Component {
   killTabSP(e) {
     e.stopPropagation();
     this.props.killTab();
+    this.props.removeURL();
   }
 
 
@@ -61,7 +63,7 @@ that window was killed
 */
 
 const mapStateToProps = (state, ownProps) => ({
-  active_id: state.active_tab[ownProps.wid][0]
+  active_id: state.active_tab[ownProps.wid]
 });
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
@@ -74,12 +76,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         }
     	})
     },
+    removeURL: () => {
+      dispatch({
+        tyoe:"REMOVE-URL",
+        payload: ownProps.tid
+      })
+    },
     focusTab: () => {
       dispatch({
         type:"NEW-ACTIVE-TAB",
         payload: {
           window_id: ownProps.wid,
-          tab: [ownProps.tid, ownProps.tab_url]
+          tab: ownProps.tid
         }
       })
     }

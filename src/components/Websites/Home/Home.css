@@ -16,3 +16,9 @@
 	position: absolute;
 	top: 48%;
 }
+
+.search-button {
+	position: absolute;
+    width: 100%;
+    top: 63%;
+}

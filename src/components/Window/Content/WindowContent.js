@@ -22,7 +22,10 @@ class WindowContent extends Component {
 			         	current_tabs: this.props.current_tabs,
 			         	active_tab: this.props.active_tab,
 			         	curr_height: 350,
-			         	curr_width: 500
+			         	curr_width: 500,
+			         	search_content: this.props.search_content["url"],
+			         	search_state: this.props.search_content["ctrl"],
+			         	tab_urls: this.props.tab_urls
 			         };
 			         
 		// needed for ctrl+t/w 
@@ -35,13 +38,21 @@ class WindowContent extends Component {
 			let new_state_tabs = store.getState().live_tabs[this.props.wid];
 			let new_active_window = store.getState().active_window;
 			let new_active_tab = store.getState().active_tab[this.props.wid];
+			let new_search_content = store.getState().search["url"];
+			let new_search_state = store.getState().search["ctrl"];
+			let new_tab_urls = store.getState().tabURL;
 
 			this.setState({ current_tabs: new_state_tabs,
 							active_window: new_active_window,
-							active_tab: new_active_tab });
+							active_tab: new_active_tab,
+							search_content: new_search_content,
+							search_state: new_search_state,
+							tab_urls: new_tab_urls });
 		});
 
-		this.props.focusTab(this.props.spawnDefaultTab());
+		let tab_id = this.props.spawnDefaultTab();
+		this.props.focusTab(tab_id);
+		this.props.setTabURL(tab_id, "home");
 	}
 
 	componentWillUnmount() {
@@ -60,6 +71,16 @@ class WindowContent extends Component {
 		}
 	
 		this.tab_bodies = tab_bodies;
+
+		// For a search tab - i.e. home
+		if (nextState.search_state === 1) {
+			this.props.searchACK();
+
+			let active_tab_id = nextState.active_tab;
+
+			this.props.setTabURL(active_tab_id, nextState.search_content);
+
+		}
 	}
 
 	componentWillReceiveProps( { keydown } ) {
@@ -72,11 +93,12 @@ class WindowContent extends Component {
 				switch (curr_key) {
 					case (84): 
 						if (this.tab_bodies.length < 3) {
-							this.props.spawnDefaultTab();
+							this.props.setTabURL(this.props.spawnDefaultTab(), "home");
 						}
 						break;
 					case (87):
-						this.props.killTab(this.state.active_tab[0]);
+						this.props.killTab(this.state.active_tab);
+						this.props.removeURL(this.state.active_tab);
 						break;
 					default:
 						this.prev = curr_key;
@@ -94,6 +116,10 @@ class WindowContent extends Component {
 
 	render() {	
 
+		let active_url = this.state.active_tab === undefined ? "" : this.state.tab_urls[this.state.active_tab];
+
+		console.log(active_url);
+
 		return (
 			<Rnd default={{x: 630, y: 0, height: 350, width: 500}} 
 			     onResize={(e, direction, ref, delta, position)=>{
@@ -108,13 +134,13 @@ class WindowContent extends Component {
 		      		</div>
 		      		<div className="search" style={{width: this.state.curr_width + "px"}}>
 		      			<div className="search-content" style={{width: (this.state.curr_width - 90) + "px"}}> 
-		      				<div style={{width: '100%', height: '100%', top: '-1px', position: 'relative'}}>https://{ this.state.active_tab === undefined ? "" : this.state.active_tab[1] }.com</div>
+		      				<div style={{width: '100%', height: '100%', top: '-1px', position: 'relative'}}>https://{ active_url }.com</div>
 		      			 </div>
 		      		</div>
 		      		<div className="content" 
 		      			style={{width: this.state.curr_width + "px",
 		      					height: this.state.curr_height-40 + "px" }}>
-		      			{ this.state.active_tab === undefined ? "" : contentList[this.state.active_tab[1]] }
+		      			{ active_url === "" ? "" : contentList[active_url][0] }
 		      		</div>
 		      	</div>
 		   	</Rnd>
@@ -127,7 +153,9 @@ const mapStateToProps = (state, ownProps) => ({
 	current_tabs: state.live_tabs[ownProps.wid],
 	current_content: state.active_content,
 	active_window: state.active_window,
-	active_tab: state.active_tab[ownProps.wid]
+	active_tab: state.active_tab[ownProps.wid],
+	search_content: state.search,
+	tab_urls: state.tabURL
 
 });
 
@@ -139,27 +167,29 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 			payload: ownProps.wid
 		});
     },
-    spawnTab: (tab_body) => {
+    setTabURL: (tab_id, url) => {
     	dispatch({
-    		type:"SPAWN-TAB",
-    		payload: {
-    			id: ownProps.wid,
-    			content: tab_body
-    		}
+    		type:"SET-URL",
+    		payload: [tab_id, url]
+    	}) 
+    },
+    removeURL: (tab_id) => {
+    	dispatch({
+    		type:"REMOVE-URL",
+    		payload: tab_id
     	})
     },
     spawnDefaultTab: () => {
     	let tab_id = Symbol();
-    	let tab_url = "home";
     	dispatch({
     		type:"SPAWN-TAB",
     		payload: {
     			id: ownProps.wid,
     			content: [ tab_id, 
-    			<WindowTab name="default tab" tid={ tab_id } key={ uuidv1() } wid={ ownProps.wid } tab_url={ tab_url } /> ]
+    			<WindowTab name={ contentList["home"][1] } tid={ tab_id } key={ uuidv1() } wid={ ownProps.wid } /> ]
     		}
     	})
-    	return [tab_id, tab_url];
+    	return tab_id;
     },
     setActive: () => {
     	dispatch({
@@ -184,6 +214,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           tab: tab
         }
       })
+    },
+    searchACK: () => {
+    	dispatch({
+    		type: "SEARCH-ACKNOWLEDGE"
+    	})
     }
   }
 };

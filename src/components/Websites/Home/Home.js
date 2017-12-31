@@ -1,15 +1,48 @@
-import React from 'react';
-import { Input } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { Input } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 
 import './Home.css';
 
-const Home = () => {
-	return (
-		<div id="content-body">
-			<div className="logo">Home</div>
-			<Input className="search-input" icon='search' placeholder='Search...' />
-		</div>
-	)
+class Home extends Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			input: ""
+		}
+	}
+
+	handleSearch(e) {
+		e.stopPropagation();
+		this.props.search_request(this.state.input);
+	}
+
+	render() {
+		return (
+			<div id="content-body">
+				<div className="logo">Home</div>
+				<Input className="search-input" icon='search' placeholder='Search...' 
+				onChange={(event, data)=> {
+					this.setState({input: data.value});
+				}}/>
+				<div onClick={(e)=>{this.handleSearch(e)}} className="search-button">search</div>
+			</div>
+		)
+	}
+	
 }
 
-export default Home;
+const mapDispatchToProps = dispatch => {
+  return {
+    search_request: (request) => {
+      dispatch(
+      {
+        type: "SEARCH-REQUEST", 
+        payload: request
+      });
+    }
+  }
+};
+
+export default connect(()=>({}), mapDispatchToProps)(Home);
