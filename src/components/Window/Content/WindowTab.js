@@ -3,34 +3,38 @@ import { connect } from 'react-redux';
 
 import './WindowTab.css';
 import store from '../../../reducers/store';
+import contentList from '../../Websites/WebsiteMasterList';
 
 class WindowTab extends Component {
 
 	constructor(props) {
 		super(props);
-		this.name = props.name;
 
-    this.state = { is_active_tab: this.props.active_id === this.props.tid };
+    this.state = { is_active_tab: this.props.active_id === this.props.tid,
+                   tab_title: contentList[this.props.my_url][1] };
 	}
 
   componentDidMount() {
     this.subscription = store.subscribe(() => {
-      let new_id = store.getState().active_tab[this.props.wid][0];
+      let new_id = store.getState().active_tab[this.props.wid];
       let is_active_tab = new_id === this.props.tid; 
 
-      this.setState({is_active_tab});
+      let new_url = store.getState().tabURL[this.props.tid];
+      let tab_title = contentList[new_url][1];
+
+      this.setState({is_active_tab, tab_title});
     });
   }
 
   componentWillUnmount() {
     this.subscription();
+    this.props.removeURL();
   }
 
   // Kill tab and Stop Bubbling (Propagation)
   killTabSP(e) {
     e.stopPropagation();
     this.props.killTab();
-    this.props.removeURL();
   }
 
 
@@ -45,7 +49,7 @@ class WindowTab extends Component {
 		return (
 			  <div className={"tab" + full_opacity} onClick={this.props.focusTab}>
       			<div className="icon-tab"></div>
-      			<div className="name-tab">{this.name}</div>
+      			<div className="name-tab">{this.state.tab_title}</div>
       			<div className="exit-tab" onClick={(e)=>{this.killTabSP(e)}}>X</div>
 		    </div>
     	);
@@ -63,7 +67,8 @@ that window was killed
 */
 
 const mapStateToProps = (state, ownProps) => ({
-  active_id: state.active_tab[ownProps.wid]
+  active_id: state.active_tab[ownProps.wid],
+  my_url: state.tabURL[ownProps.tid]
 });
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
@@ -78,7 +83,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     removeURL: () => {
       dispatch({
-        tyoe:"REMOVE-URL",
+        type:"REMOVE-URL",
         payload: ownProps.tid
       })
     },

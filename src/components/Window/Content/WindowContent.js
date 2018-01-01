@@ -110,15 +110,19 @@ class WindowContent extends Component {
 		}
 	}
 
-	hasFocus() {
+	hasFocus(e) {
+		e.stopPropagation();
 		this.props.setActive();
 	}
 
 	render() {	
 
+		//console.log(this.tab_bodies);
+		//console.log(this.state.tab_urls);
+
 		let active_url = this.state.active_tab === undefined ? "" : this.state.tab_urls[this.state.active_tab];
 
-		console.log(active_url);
+		console.log(this.state.tab_urls);
 
 		return (
 			<Rnd default={{x: 630, y: 0, height: 350, width: 500}} 
@@ -186,7 +190,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     		payload: {
     			id: ownProps.wid,
     			content: [ tab_id, 
-    			<WindowTab name={ contentList["home"][1] } tid={ tab_id } key={ uuidv1() } wid={ ownProps.wid } /> ]
+    			<WindowTab tid={ tab_id } key={ uuidv1() } wid={ ownProps.wid } /> ]
     		}
     	})
     	return tab_id;
