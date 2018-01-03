@@ -20,7 +20,7 @@ class WindowTab extends Component {
       let is_active_tab = new_id === this.props.tid; 
 
       let new_url = store.getState().tabURL[this.props.tid];
-      let tab_title = contentList[new_url][1];
+      let tab_title = contentList[new_url] === undefined ? "" : contentList[new_url][1]; // The tab.kill() didn't propagate fast enough
 
       this.setState({is_active_tab, tab_title});
     });
@@ -48,9 +48,11 @@ class WindowTab extends Component {
 
 		return (
 			  <div className={"tab" + full_opacity} onClick={this.props.focusTab}>
-      			<div className="icon-tab"></div>
-      			<div className="name-tab">{this.state.tab_title}</div>
-      			<div className="exit-tab" onClick={(e)=>{this.killTabSP(e)}}>X</div>
+            <div className="tab-detail-spine">
+        			<div className="icon-tab"></div>
+        			<div className="name-tab">{this.state.tab_title}</div>
+        			<div className="exit-tab" onClick={(e)=>{this.killTabSP(e)}}>X</div>
+            </div>
 		    </div>
     	);
   	}

@@ -15,29 +15,30 @@ and then just update the index, then sort on the index and
 use that to determine the order by rendering them in that order. 
 
 */
-
+var counter = 0;
 class WindowBody extends Component {
 
   constructor(props) {
     super(props);
-    this.props = props;
 
-    this.live_windows = this.props.live_windows;
-    this.windows = [];
-
-    // needed for ctrl+n
-    this.prev = 0;
+    this.state = {
+      windows: this.props.live_windows,
+      order: this.props.window_order
+    }
+    this.live_windows = [];
   }
 
   componentDidMount() {
     this.subsciption = store.subscribe(() => {
-      this.live_windows = store.getState().live_windows;
+      let { windows, order } = store.getState().live_windows;
+
+      this.setState({ windows, order });
     });
 
     this.props.spawn_default_window();
 
     document.onkeypress = (e) => {
-      if (e.keyCode === 14 && this.windows.length < 3) {
+      if (e.keyCode === 14 && this.live_windows.length < 3) {
         this.props.spawn_default_window();
       }
     }
@@ -47,26 +48,26 @@ class WindowBody extends Component {
     this.subsciption();
   }
 
-  componentWillUpdate() {
-    let windows = [];
+  componentWillUpdate(nextProps, nextState) {
+    let live_windows = [];
 
-    for (let key of Object.getOwnPropertySymbols(this.live_windows)) {
-      windows.push(this.live_windows[key]);
+    for (let window_id of nextState.order) {
+      live_windows.push(nextState.windows[window_id]);
     }
 
-    this.windows = windows;
+    this.live_windows = live_windows;
   }
 
   render() {
 
-    if (this.windows.length === 0) {
+    if (this.live_windows.length === 0) {
       return (
         <div className="new-tab-text">Press control+n to open a new window</div>
         );
     } else {
       return (
         <div className="WindowBody">
-  	      	{ this.windows }
+  	      	{ this.live_windows }
         </div>
       );
     }
@@ -74,13 +75,14 @@ class WindowBody extends Component {
 }
 
 const mapStateToProps = state => ({
-  live_windows: state.live_windows
+  live_windows: state.live_windows["windows"],
+  window_order: state.live_windows["order"]
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     spawn_default_window: () => {
-      let window_id = Symbol();
+      let window_id = Symbol(counter++ + "");
       dispatch(
       {
         type:"SPAWN-WINDOW", 

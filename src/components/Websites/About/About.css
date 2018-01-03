@@ -1,0 +1,43 @@
+#text-container {
+	height: 150px;
+    width: 60%;
+    position: relative;
+    top: 50%;
+    left: 6%;
+    text-align: left;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.name-header-text {
+	font-size: 40px;
+    position: relative;
+    font-weight: bold;
+    top: 25px;
+ }
+
+.name-divider {
+	width: 250px;
+    height: 2px;
+    border: 2px solid #517598;
+    position: relative;
+    top: 42px;
+}
+
+.name-lower-text {
+	font-size: 25px;
+    position: relative;
+    top: 45px;
+    line-height: normal;
+}
+
+#profile-image {
+	width: 150px;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	left: 106%;
+	opacity: .94;
+	background: black;
+}

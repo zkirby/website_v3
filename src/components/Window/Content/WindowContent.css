@@ -34,6 +34,7 @@
 	/*width: 500px;*/
 	position: relative;
 	border-radius: 5px;
+	overflow: hidden;
 }
 
 .tab-spine {

@@ -1,33 +1,37 @@
 .exit-tab {
 	color: #EF767A;
-	position: relative;
-	cursor: pointer;
-	font-weight: 700;
-	font-size: 8px;
-	top: -2px;
-    left: 16px;
-	display: inline-block;
-	font-family: 'Istok Web', sans-serif;
+    position: absolute;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 8px;
+    top: 1px;
+    left: 111px;
+    display: inline-block;
+    font-family: 'Istok Web', sans-serif;
 }
 
 .icon-tab {
 	height: 10px;
-	width: 10px;
-	position: relative;
-	background: #EF767A;
-	display: inline-block;
-	top: -1px;
-    left: -17px;
+    width: 10px;
+    position: absolute;
+    background: #EF767A;
+    display: inline-block;
+    top: 5px;
+    left: 10px;
 }
 
 .name-tab {
 	display: inline-block;
-	font-size: 12px;
-	color: #EEF0F2;
-	position: relative;
-	top: -2px;
-    left: -12px;
+    font-size: 12px;
+    color: #EEF0F2;
+    position: absolute;
+    top: -1px;
+    width: 80px;
+    text-overflow: ellipsis;
+    left: 24px;
     cursor: default;
+    height: 19px;
+    text-align: left;
 }
 
 .tab {
@@ -48,4 +52,11 @@
 
 .full_opacity {
 	opacity: 1;
+}
+
+.tab-detail-spine {
+	height: 19px;
+    width: 128px;
+    left: -10px;
+    position: relative;
 }

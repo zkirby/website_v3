@@ -9,18 +9,18 @@ import controls from './controlReducer';
 
 
 /*
-Live Windows   = obj: { window_id: window_jsx }
+Live Windows   = obj: { "windows": { window_id: window_jsx }, "order": [window_id_first, etc] }
 Live Tabs      = obj: { window_id: [[ tab_id, tab_jsx ], [ tab_id, tab_jsx ]] }
 Tab URL        = obj: { tab_id: url }
 Active Tab     = obj: { window_id: tab_id }
-Active Window  = int: window_id
+Active Window  = sym: window_id
 Controls       = obj: { cntrl_signal: int }
 Search         = obj: { url: url_path, ctrl: bool }
 */
 
 
 const starting_obj = {
-	live_windows: {},
+	live_windows: {"windows": {}, "order": []},
 	live_tabs: {},
 	tabURL: {},
 	active_tab: {},

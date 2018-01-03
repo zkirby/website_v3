@@ -21,12 +21,14 @@ class Home extends Component {
 	render() {
 		return (
 			<div id="content-body">
-				<div className="logo">Home</div>
-				<Input className="search-input" icon='search' placeholder='Search...' 
-				onChange={(event, data)=> {
-					this.setState({input: data.value});
-				}}/>
-				<div onClick={(e)=>{this.handleSearch(e)}} className="search-button">search</div>
+				<div id="search-body">
+					<div className="logo">Home</div>
+					<Input className="search-input" icon='search' placeholder='Search...' 
+					onChange={(event, data)=> {
+						this.setState({input: data.value});
+					}}/>
+					<div onClick={(e)=>{this.handleSearch(e)}} className="search-button slide">search</div>
+				</div>
 			</div>
 		)
 	}

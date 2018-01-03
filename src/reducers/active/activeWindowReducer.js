@@ -3,8 +3,7 @@ const activeWindowReducer = function(state, action) {
 	let { type } = action;
 
 	if (type === "NEW-ACTIVE-WINDOW") {
-		let new_state = action.payload
-		return new_state;
+		return action.payload;
 
 	} else if (state === undefined) {
 		return 0;

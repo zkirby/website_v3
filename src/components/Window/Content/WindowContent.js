@@ -10,6 +10,19 @@ import contentList from '../../Websites/WebsiteMasterList';
 
 import './WindowContent.css';
 
+/*
+BUG - error's on contentList[active_url] with active_url = undefined for
+some unknown reason.
+
+BUG - all of the searchs for a given window 
+show the exact same thing
+
+[FIXED] BUG - hitting search on one window changes the search 
+of another different window.
+
+TODO - add support for favicons
+*/
+
 
 class WindowContent extends Component {
 
@@ -18,7 +31,7 @@ class WindowContent extends Component {
 		this.props = props;
 
 		this.state = {
-			         	active_window: this.props.active_window, 
+			         	is_active: this.props.active_window, 
 			         	current_tabs: this.props.current_tabs,
 			         	active_tab: this.props.active_tab,
 			         	curr_height: 350,
@@ -36,14 +49,14 @@ class WindowContent extends Component {
 		this.subsciption = 
 		store.subscribe(() => {
 			let new_state_tabs = store.getState().live_tabs[this.props.wid];
-			let new_active_window = store.getState().active_window;
+			let new_active_window = store.getState().active_window === this.props.wid;
 			let new_active_tab = store.getState().active_tab[this.props.wid];
 			let new_search_content = store.getState().search["url"];
 			let new_search_state = store.getState().search["ctrl"];
 			let new_tab_urls = store.getState().tabURL;
 
 			this.setState({ current_tabs: new_state_tabs,
-							active_window: new_active_window,
+							is_active: new_active_window,
 							active_tab: new_active_tab,
 							search_content: new_search_content,
 							search_state: new_search_state,
@@ -61,35 +74,40 @@ class WindowContent extends Component {
 
 	componentWillUpdate(nextProps, nextState) {
 		let tab_bodies = [];
+		let active_tab_is_alive = false;
 
 		for (let val of nextState.current_tabs) {
 	      tab_bodies.push(val[1]);
+
+	      if (val[0] === nextState.active_tab) {
+	      	active_tab_is_alive = true;
+	      }
 	    }
 
 		if (tab_bodies.length === 0) {
 			this.props.killWindow();
+		} else if (!active_tab_is_alive) {
+			this.props.focusTab(nextState.current_tabs[0][0]);
 		}
 	
 		this.tab_bodies = tab_bodies;
 
 		// For a search tab - i.e. home
-		if (nextState.search_state === 1) {
-			this.props.searchACK();
-
+		if (nextState.search_state === 1 && this.state.is_active) {
 			let active_tab_id = nextState.active_tab;
 
 			this.props.setTabURL(active_tab_id, nextState.search_content);
 
+			this.props.searchACK();
 		}
 	}
 
 	componentWillReceiveProps( { keydown } ) {
 		if (keydown.event) {
 			let curr_key = keydown.event.which;
-			let is_active = this.state.active_window === this.props.wid;
 
 			// If a ctrl was issued and we are working with in an active state
-			if (this.prev === 17 && is_active) {
+			if (this.prev === 17 && this.state.is_active) {
 				switch (curr_key) {
 					case (84): 
 						if (this.tab_bodies.length < 3) {
@@ -98,7 +116,6 @@ class WindowContent extends Component {
 						break;
 					case (87):
 						this.props.killTab(this.state.active_tab);
-						this.props.removeURL(this.state.active_tab);
 						break;
 					default:
 						this.prev = curr_key;
@@ -117,12 +134,7 @@ class WindowContent extends Component {
 
 	render() {	
 
-		//console.log(this.tab_bodies);
-		//console.log(this.state.tab_urls);
-
 		let active_url = this.state.active_tab === undefined ? "" : this.state.tab_urls[this.state.active_tab];
-
-		console.log(this.state.tab_urls);
 
 		return (
 			<Rnd default={{x: 630, y: 0, height: 350, width: 500}} 
@@ -144,7 +156,7 @@ class WindowContent extends Component {
 		      		<div className="content" 
 		      			style={{width: this.state.curr_width + "px",
 		      					height: this.state.curr_height-40 + "px" }}>
-		      			{ active_url === "" ? "" : contentList[active_url][0] }
+		      			{ contentList[active_url] === undefined ? "" : contentList[active_url][0] }
 		      		</div>
 		      	</div>
 		   	</Rnd>
@@ -156,7 +168,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 	current_tabs: state.live_tabs[ownProps.wid],
 	current_content: state.active_content,
-	active_window: state.active_window,
+	active_window: state.active_window === ownProps.wid,
 	active_tab: state.active_tab[ownProps.wid],
 	search_content: state.search,
 	tab_urls: state.tabURL
@@ -177,12 +189,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     		payload: [tab_id, url]
     	}) 
     },
-    removeURL: (tab_id) => {
-    	dispatch({
-    		type:"REMOVE-URL",
-    		payload: tab_id
-    	})
-    },
     spawnDefaultTab: () => {
     	let tab_id = Symbol();
     	dispatch({
@@ -200,14 +206,22 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     		type:"NEW-ACTIVE-WINDOW",
     		payload: ownProps.wid
     	})
+    	dispatch({
+    		type:"BRING-FORWARD-WINDOW",
+    		payload: ownProps.wid
+    	})
     },
     killTab: (tab_id) => {
     	dispatch({
     		type:"KILL-TAB",
     		payload: {
-          window_id: ownProps.wid,
-          tab_id: tab_id
-        }
+	          window_id: ownProps.wid,
+	          tab_id: tab_id
+	        }
+    	})
+    	dispatch({
+    		type:"REMOVE-URL",
+    		payload: tab_id
     	})
     },
     focusTab: (tab) => {

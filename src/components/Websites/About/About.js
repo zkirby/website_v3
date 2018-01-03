@@ -1,30 +1,40 @@
 import React from 'react';
-import { Card, Icon } from 'semantic-ui-react'
+import { Image } from 'semantic-ui-react'
+import picture from '../assets/images/profile.jpg';
 
 import './About.css';
 
 const About = () => (
-	<Card>
-    <Card.Content>
-      <Card.Header>
-        Matthew
-      </Card.Header>
-      <Card.Meta>
-        <span className='date'>
-          Joined in 2015
-        </span>
-      </Card.Meta>
-      <Card.Description>
-        Matthew is a musician living in Nashville.
-      </Card.Description>
-    </Card.Content>
-    <Card.Content extra>
-      <a>
-        <Icon name='user' />
-        22 Friends
-      </a>
-    </Card.Content>
-  </Card>
+  <div style={{height: "100%", width: "100%", background:"#FFFFFF"}}>
+    <div id="text-container">
+      <div className="name-header-text">Zachary Kirby</div>
+      <div className="name-divider"></div>
+      <div className="name-lower-text">Film and Computer Science Major at UC Berkeley</div>
+      <Image src={ picture } size='medium' circular id="profile-image"/>
+    </div>
+  </div>
 )	
+
+
+/* 
+  Style-kit
+  -- the styles to be sent
+  to the window content
+*/
+
+const styleKit = {
+  rootBG: "",
+  contentBG: "white",
+  tabStyle: {
+    fontColor: "",
+    BG: "",
+    exitColor: ""
+  },
+  searchStyle: {
+    BG: "",
+    fontColor: "",
+    searchBG: ""
+  }
+}
 
 export default About;
