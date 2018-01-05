@@ -1,3 +1,12 @@
+/*
+clr1
+- white: #ffffff;
+- black: #252525;
+- grey: #d5d5d3;
+- greyer: #444444;
+- yellow: #fdd947;
+*/
+
 .WindowContent {
 	height: 400px;
 	width: 500px;
@@ -5,26 +14,24 @@
 	cursor: default;
 }
 .search {
-	/*width: 500px;*/
-	background: #456990;
-	height: 20px;
+	/*background: #456990;*/
+	height: 22px;
 	top: 15px;
 	position: relative;
 	z-index: 10;
 }
 
 .search-content {
-	/*width: 400px;*/
 	height: 16px;
-	top: 1px;
+	top: 3px;
 	position: relative;
 	border-radius: 2px;
-	background: #EEF0F2;
+	/*background: #EEF0F2;*/
 	left: 35px;
 	font-size: 13px;
 	text-align: left;
 	padding-left: 10px;
-	color: #49BEAA;
+	/*color: #49BEAA;*/
 	font-family: 'Istok Web', sans-serif;
 }
 
@@ -34,7 +41,27 @@
 	/*width: 500px;*/
 	position: relative;
 	border-radius: 5px;
-	overflow: hidden;
+	overflow-x: hidden;
+}
+
+.content::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+.content::-webkit-scrollbar
+{
+    width: 0px;
+    background-color: #F5F5F5;
+}
+
+.content::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
 }
 
 .tab-spine {
@@ -43,4 +70,21 @@
     top: 19px;
     position: relative;
     left: 37px;
+}
+
+.tab-spawn {
+	width: 18px;
+    height: 11px;
+    top: 4px;
+    position: relative;
+    -webkit-transform: skew(20deg);
+    -moz-transform: skew(20deg);
+    -o-transform: skew(20deg);
+    opacity: 0.4;
+    cursor: pointer;
+    transition: 0.4s;
+    float: left;
+}
+.tab-spawn:hover {
+	opacity: 1;
 }

@@ -11,7 +11,8 @@ class WindowTab extends Component {
 		super(props);
 
     this.state = { is_active_tab: this.props.active_id === this.props.tid,
-                   tab_title: contentList[this.props.my_url][1] };
+                   tab_title: contentList[this.props.my_url]['tab-header'],
+                   search_url: this.props.my_url };
 	}
 
   componentDidMount() {
@@ -19,10 +20,10 @@ class WindowTab extends Component {
       let new_id = store.getState().active_tab[this.props.wid];
       let is_active_tab = new_id === this.props.tid; 
 
-      let new_url = store.getState().tabURL[this.props.tid];
-      let tab_title = contentList[new_url] === undefined ? "" : contentList[new_url][1]; // The tab.kill() didn't propagate fast enough
+      let search_url = store.getState().tabURL[this.props.tid];
+      let tab_title = contentList[search_url]['tab-header']; 
 
-      this.setState({is_active_tab, tab_title});
+      this.setState({is_active_tab, tab_title, search_url});
     });
   }
 
@@ -31,7 +32,7 @@ class WindowTab extends Component {
     this.props.removeURL();
   }
 
-  // Kill tab and Stop Bubbling (Propagation)
+  // Kill tab and Stops Bubbling
   killTabSP(e) {
     e.stopPropagation();
     this.props.killTab();
@@ -40,33 +41,29 @@ class WindowTab extends Component {
 
 	render() {
 
+    const { is_active_tab, tab_title, search_url } = this.state;
     let full_opacity = '';
 
-    if (this.state.is_active_tab) {
+    // Custom styling 
+    const { favicon, bodyClr, fontClr, exitClr } = contentList[search_url]["styles"]["tab"]; 
+
+    if (is_active_tab) {
       full_opacity = ' full_opacity';
     }
 
 		return (
-			  <div className={"tab" + full_opacity} onClick={this.props.focusTab}>
+			  <div className={"tab" + full_opacity} 
+             onClick={this.props.focusTab}
+             style={{borderBottomColor: bodyClr}}>
             <div className="tab-detail-spine">
-        			<div className="icon-tab"></div>
-        			<div className="name-tab">{this.state.tab_title}</div>
-        			<div className="exit-tab" onClick={(e)=>{this.killTabSP(e)}}>X</div>
+        			<div className="icon-tab"> <i class={ favicon } aria-hidden='true'></i> </div>
+        			<div className="name-tab" style={{color: fontClr}}> { tab_title } </div>
+        			<div className="exit-tab" style={{color: exitClr}} onClick={(e)=>{this.killTabSP(e)}}>X</div>
             </div>
 		    </div>
     	);
   	}
 }
-
-/*
-
-Need to make a function if someone manually kills a tab and how to 
-handle what happens to the current active tab.
-
-add new state event that is flipped to a 1 if the tab for 
-that window was killed 
-
-*/
 
 const mapStateToProps = (state, ownProps) => ({
   active_id: state.active_tab[ownProps.wid],

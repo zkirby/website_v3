@@ -21,6 +21,7 @@ show the exact same thing
 of another different window.
 
 TODO - add support for favicons
+TODO - finsh header and footer
 */
 
 
@@ -28,14 +29,19 @@ class WindowContent extends Component {
 
 	constructor(props) {
 		super(props);
-		this.props = props;
+
+		// Defaults 
+		this.default = {
+			height: 500,
+			width: 730
+		}
 
 		this.state = {
 			         	is_active: this.props.active_window, 
 			         	current_tabs: this.props.current_tabs,
 			         	active_tab: this.props.active_tab,
-			         	curr_height: 350,
-			         	curr_width: 500,
+			         	curr_height: this.default.height,
+			         	curr_width: this.default.width,
 			         	search_content: this.props.search_content["url"],
 			         	search_state: this.props.search_content["ctrl"],
 			         	tab_urls: this.props.tab_urls
@@ -63,6 +69,10 @@ class WindowContent extends Component {
 							tab_urls: new_tab_urls });
 		});
 
+		this.spawn_new_tab();
+	}
+
+	spawn_new_tab() {
 		let tab_id = this.props.spawnDefaultTab();
 		this.props.focusTab(tab_id);
 		this.props.setTabURL(tab_id, "home");
@@ -111,7 +121,7 @@ class WindowContent extends Component {
 				switch (curr_key) {
 					case (84): 
 						if (this.tab_bodies.length < 3) {
-							this.props.setTabURL(this.props.spawnDefaultTab(), "home");
+							this.spawn_new_tab();
 						}
 						break;
 					case (87):
@@ -135,9 +145,16 @@ class WindowContent extends Component {
 	render() {	
 
 		let active_url = this.state.active_tab === undefined ? "" : this.state.tab_urls[this.state.active_tab];
+		let content = "";
+		const ref = contentList[active_url];
+
+		content = ref["content"];
+
+		const { backBarClr, fontClr, frontBarClr } = ref["styles"]["search"];
+		const { bodyClr } = ref["styles"]["tab"];
 
 		return (
-			<Rnd default={{x: 630, y: 0, height: 350, width: 500}} 
+			<Rnd default={{x: 300, y: 70, height: this.default.height, width: this.default.width}} 
 			     onResize={(e, direction, ref, delta, position)=>{
 				this.setState({
 					curr_width: ref.offsetWidth,
@@ -147,16 +164,17 @@ class WindowContent extends Component {
 		      	<div className="WindowContent" onClick={(e)=>{this.hasFocus(e)}}>
 		      		<div className="tab-spine" style={{width: this.state.curr_width + "px"}}>
 		      			{ this.tab_bodies }
+		      			<div onClick={(e)=>{this.spawn_new_tab(e)}} className="tab-spawn" style={{background: bodyClr}}></div>
 		      		</div>
-		      		<div className="search" style={{width: this.state.curr_width + "px"}}>
-		      			<div className="search-content" style={{width: (this.state.curr_width - 90) + "px"}}> 
+		      		<div className="search" style={{width: this.state.curr_width + "px", background:backBarClr}}>
+		      			<div className="search-content" style={{width: (this.state.curr_width - 90) + "px", background:frontBarClr, color:fontClr}}> 
 		      				<div style={{width: '100%', height: '100%', top: '-1px', position: 'relative'}}>https://{ active_url }.com</div>
 		      			 </div>
 		      		</div>
 		      		<div className="content" 
 		      			style={{width: this.state.curr_width + "px",
 		      					height: this.state.curr_height-40 + "px" }}>
-		      			{ contentList[active_url] === undefined ? "" : contentList[active_url][0] }
+		      			{ content }
 		      		</div>
 		      	</div>
 		   	</Rnd>

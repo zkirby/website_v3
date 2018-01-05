@@ -12,18 +12,37 @@
 
 
 */
-.WindowBody {
-	top: 30%;
-	transform: translateY(-50%);
-	margin: 0 auto;
-	position: absolute;
-}
-
 .new-tab-text {
 	font-size: 40px;
 	color: white;
 	top: 50%;
-	position: relative;
+	transform: translateY(-50%);
+	position: absolute;
 	text-align: center;
 	width: 100%;
 }
+
+
+#header-spine, #footer-spine {
+	position: absolute;
+	font-size: 12px;
+	color: white;
+	opacity: 0.3;
+}
+
+#footer-spine {
+	top: 96%;
+	left: 1%;
+}
+
+#header-spine {
+	top: 1%;
+	right: 1%;
+}
+
+
+
+
+
+
+

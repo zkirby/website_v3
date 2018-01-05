@@ -10,6 +10,19 @@
     transform: translateY(-50%);
 }
 
+#about-header-container {
+    height: 100%;
+    width: 100%;
+    border-bottom: 3px solid black;
+}
+
+#about-link-container {
+    height: 100%;
+    width: 100%;
+    background: #ffffff;
+}
+
+
 .name-header-text {
 	font-size: 40px;
     position: relative;

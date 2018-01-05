@@ -1,5 +1,15 @@
+/*
+clr1
+- white: #ffffff;
+- black: #252525;
+- grey: #d5d5d3;
+- greyer: #444444;
+- yellow: #fdd947;
+*/
+
+
 .exit-tab {
-	color: #EF767A;
+	/*color: #EF767A;*/
     position: absolute;
     cursor: pointer;
     font-weight: 700;
@@ -14,7 +24,9 @@
 	height: 10px;
     width: 10px;
     position: absolute;
-    background: #EF767A;
+    /*background: #EF767A;*/
+    background: #d5d5d3;
+    opacity: 0.6;
     display: inline-block;
     top: 5px;
     left: 10px;
@@ -23,7 +35,7 @@
 .name-tab {
 	display: inline-block;
     font-size: 12px;
-    color: #EEF0F2;
+    /*color: #EEF0F2;*/
     position: absolute;
     top: -1px;
     width: 80px;
@@ -35,7 +47,8 @@
 }
 
 .tab {
-    border-bottom: 23px solid #49BEAA;
+    /*border-bottom: 23px solid #49BEAA;*/
+    border-bottom: 23px solid;
     border-left: 11px solid transparent;
     border-right: 11px solid transparent;
     height: 0;

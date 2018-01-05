@@ -60,17 +60,26 @@ class WindowBody extends Component {
 
   render() {
 
+    let render_middle = <div></div>;
+
     if (this.live_windows.length === 0) {
-      return (
-        <div className="new-tab-text">Press control+n to open a new window</div>
-        );
+      render_middle = ( <div className="new-tab-text">Press control+n to open a new window</div> );
     } else {
-      return (
-        <div className="WindowBody">
-  	      	{ this.live_windows }
-        </div>
-      );
+      render_middle = ( <div className="WindowBody"> { this.live_windows } </div> );
     }
+
+    return (
+      <div style={{height: "100%", width: "100%"}}>
+        <div id="header-spine">
+          <div>Zachary Kirby</div>
+        </div>
+        { render_middle }
+        <div id="footer-spine">
+          <div>controls: to open a new window - ctrl+n; to open a new tab - ctrl+t; to close a tab - ctrl+w</div>
+        </div> 
+      </div>
+
+    )
   }
 }
 
