@@ -4,18 +4,22 @@ import uuidv1 from 'uuid/v1';
 
 import WindowContent from './Content/WindowContent';
 import store from '../../reducers/store';
+import QuestionModal from '../Modals/QuestionModal';
 
 import './WindowBody.css';
 
 /*
 
-TODO: Add a way to move focused windows to the 
+[DONE] TODO: Add a way to move focused windows to the 
 front. Maybe change live_windows to be - [index, jsx]
 and then just update the index, then sort on the index and 
 use that to determine the order by rendering them in that order. 
+[DONE] TODO: fix the hover effect on the question mark on the header bar
+[DONE] TODO: Fix modal
+
+TODO: Make 404 page 
 
 */
-var counter = 0;
 class WindowBody extends Component {
 
   constructor(props) {
@@ -60,8 +64,9 @@ class WindowBody extends Component {
 
   render() {
 
-    let render_middle = <div></div>;
+    const { show_modal } = this.props; 
 
+    let render_middle = <div></div>;
     if (this.live_windows.length === 0) {
       render_middle = ( <div className="new-tab-text">Press control+n to open a new window</div> );
     } else {
@@ -71,12 +76,14 @@ class WindowBody extends Component {
     return (
       <div style={{height: "100%", width: "100%"}}>
         <div id="header-spine">
-          <div>Zachary Kirby</div>
+          <i className="fa fa-question-circle-o header-question" aria-hidden="true" onClick={()=>{show_modal()}}></i>
+          <div className="header-name">Zachary Kirby</div>
         </div>
         { render_middle }
         <div id="footer-spine">
           <div>controls: to open a new window - ctrl+n; to open a new tab - ctrl+t; to close a tab - ctrl+w</div>
         </div> 
+        <QuestionModal />
       </div>
 
     )
@@ -91,12 +98,18 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     spawn_default_window: () => {
-      let window_id = Symbol(counter++ + "");
+      let window_id = Symbol();
       dispatch(
       {
         type:"SPAWN-WINDOW", 
         payload: [window_id, <WindowContent key={ uuidv1() } wid={ window_id }/>]
       });
+    },
+    show_modal: () => {
+      dispatch({
+        type:"MODAL-STATE",
+        payload: "block"
+      })
     }
   }
 };

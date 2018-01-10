@@ -47,24 +47,22 @@ clr1
 
 .search-button {
 	position: absolute;
-    top: 40%;
-    left: 103%;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 1;
-    -webkit-transition: 0.4s;
-    -o-transition: 0.4s;
-    transition: 0.3s;
+  top: 40%;
+  left: 104%;
+  font-size: 24px;
+  cursor: pointer;
+  -webkit-transition: 0.4s;
+  -o-transition: 0.4s;
+  transition: 0.3s;
 
-    height: 30px;
-    width: 30px;
-    background: #444444;
+  height: 30px;
+  width: 30px;
+  color: #444444;
   border-radius: 100px;
 }
 
 .search-button:hover {
-	opacity: 1;
-  background: #d5d5d3;
+  color: #d5d5d3;
 }
 
 #search-body {
@@ -76,22 +74,12 @@ clr1
 	transform: translateY(-50%);
 }
 
-
-.search-fadein {
-  opacity: 0;
-  top: 10px;
-  position: relative;
-  animation: fadein 1s ease-in;
-  animation-fill-mode: forwards;
-}
-
-
 .input-wrapper {
   position: relative;
   width: 350px;
   margin: 50px auto;
   float: left;
-  right: 23%;
+  right: 20%;
 }
 
 .input-highlight {

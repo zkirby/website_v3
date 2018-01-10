@@ -12,9 +12,15 @@ class Home extends Component {
 		}
 	}
 
-	handleSearch(e) {
+	handleSearchButton(e) {
 		e.stopPropagation();
 		this.props.search_request(this.state.inputValue);
+	}
+
+	handleSearchInput(e) {
+		if (e.key === 'Enter') {
+			this.props.search_request(this.state.inputValue);
+		}
 	}
 
 	render() {
@@ -31,12 +37,13 @@ class Home extends Component {
 			          placeholder='Search...'
 			          value={inputValue}
 			          spellCheck={false}
+			          onKeyDown={(e)=>{this.handleSearchInput(e)}}
 			          />
 			        <span className='input-highlight'>
 			          { inputValue.replace(/ /g, "\u00a0") }
 			        </span>
 			      </div>
-					<div onClick={(e)=>{this.handleSearch(e)}} className="search-button">
+					<div onClick={(e)=>{this.handleSearchButton(e)}} className="search-button">
 						<i className="fa fa-search" aria-hidden="true"></i>
 					</div>
 					

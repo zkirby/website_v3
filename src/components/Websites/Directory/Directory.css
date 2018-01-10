@@ -1,0 +1,48 @@
+/*
+
+red: f74464
+darkest: 374258
+darkish: 6a7285
+light: c4c4c4
+lightest: f3f3f3
+
+*/
+
+.directory-body {
+	background: #c4c4c4;
+}
+
+.directory-header-text {
+	top: 10%;
+    position: relative;
+    font-weight: bold;
+    font-size: 40px;
+    color: #374258;
+}
+
+.directory-body-text {
+	font-size: 20px;
+	top: 15%;
+    position: relative;
+    color: #6a7285;
+}
+
+.directory-web-list {
+	position: relative;
+    top: 16%;
+    font-size: 20px;
+    text-align: left;
+    left: 2%;
+    line-height: 33px;
+   	cursor: pointer;
+    width: fit-content;
+}
+
+.directory-web-list li {
+	transition: 0.1s;
+	color: #374258;
+}
+
+.directory-web-list li:hover {
+	color: #f74464;
+}

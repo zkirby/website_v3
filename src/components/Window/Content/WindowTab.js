@@ -56,7 +56,7 @@ class WindowTab extends Component {
              onClick={this.props.focusTab}
              style={{borderBottomColor: bodyClr}}>
             <div className="tab-detail-spine">
-        			<div className="icon-tab"> <i class={ favicon } aria-hidden='true'></i> </div>
+        			<i className={ favicon["name"] + " icon-tab"} style={{color: favicon["color"]}} aria-hidden='true'></i>
         			<div className="name-tab" style={{color: fontClr}}> { tab_title } </div>
         			<div className="exit-tab" style={{color: exitClr}} onClick={(e)=>{this.killTabSP(e)}}>X</div>
             </div>

@@ -20,8 +20,9 @@ show the exact same thing
 [FIXED] BUG - hitting search on one window changes the search 
 of another different window.
 
-TODO - add support for favicons
-TODO - finsh header and footer
+[DONE] TODO - add support for favicons
+TODO - finish header and footer
+TODO - finish about website
 */
 
 
@@ -106,7 +107,13 @@ class WindowContent extends Component {
 		if (nextState.search_state === 1 && this.state.is_active) {
 			let active_tab_id = nextState.active_tab;
 
-			this.props.setTabURL(active_tab_id, nextState.search_content);
+			// Check if the search is valid
+			let new_search_content = nextState.search_content;
+			if (contentList[new_search_content] === undefined) {
+				new_search_content = undefined;
+			}
+
+			this.props.setTabURL(active_tab_id, new_search_content);
 
 			this.props.searchACK();
 		}
@@ -144,11 +151,10 @@ class WindowContent extends Component {
 
 	render() {	
 
-		let active_url = this.state.active_tab === undefined ? "" : this.state.tab_urls[this.state.active_tab];
-		let content = "";
-		const ref = contentList[active_url];
+		let active_url = this.state.tab_urls[this.state.active_tab];
 
-		content = ref["content"];
+		const ref = contentList[active_url];
+		const content = ref["content"];
 
 		const { backBarClr, fontClr, frontBarClr } = ref["styles"]["search"];
 		const { bodyClr } = ref["styles"]["tab"];
@@ -168,7 +174,7 @@ class WindowContent extends Component {
 		      		</div>
 		      		<div className="search" style={{width: this.state.curr_width + "px", background:backBarClr}}>
 		      			<div className="search-content" style={{width: (this.state.curr_width - 90) + "px", background:frontBarClr, color:fontClr}}> 
-		      				<div style={{width: '100%', height: '100%', top: '-1px', position: 'relative'}}>https://{ active_url }.com</div>
+		      				<div style={{width: '100%', height: '100%', top: '-1px', position: 'relative'}}>https://{ active_url === undefined ? "404" : active_url }.com</div>
 		      			 </div>
 		      		</div>
 		      		<div className="content" 

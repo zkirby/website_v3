@@ -21,15 +21,15 @@ clr1
 }
 
 .icon-tab {
-	height: 10px;
-    width: 10px;
+	/*height: 10px;*/
+    /*width: 10px;*/
     position: absolute;
     /*background: #EF767A;*/
-    background: #d5d5d3;
     opacity: 0.6;
     display: inline-block;
-    top: 5px;
+    top: 4px;
     left: 10px;
+    font-size: 12px;
 }
 
 .name-tab {

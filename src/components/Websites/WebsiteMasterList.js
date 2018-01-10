@@ -2,6 +2,9 @@ import React from 'react';
 
 import SearchPage from './Home/Home';
 import AboutPage from './About/About';
+import ResumePage from './Resume/Resume';
+import FOFPage from './404/404';
+import DiretoryPage from './Directory/Directory';
 
 import styleguide from './assets/schemes/colors';
 
@@ -17,9 +20,19 @@ const master_list = {
 		"tab-header": "about",
 		"styles": styleguide['about']
 	},
-	"": {
-		"content": "",
-		"tab-header":"",
+	'resume': {
+		"content": <ResumePage />,
+		"tab-header": "resume",
+		"styles": styleguide['home']
+	},
+	'directory': {
+		"content": <DiretoryPage />,
+		"tab-header": "directory",
+		"styles": styleguide['directory']
+	},
+	[undefined]: {
+		"content": <FOFPage />,
+		"tab-header":"404",
 		"styles": styleguide['about']
 	}
 }

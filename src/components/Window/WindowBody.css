@@ -22,23 +22,45 @@
 	width: 100%;
 }
 
-
 #header-spine, #footer-spine {
 	position: absolute;
 	font-size: 12px;
 	color: white;
-	opacity: 0.3;
 }
 
 #footer-spine {
 	top: 96%;
 	left: 1%;
+	opacity: 0.3;
 }
 
 #header-spine {
 	top: 1%;
 	right: 1%;
 }
+
+.header-question {
+	display: inline-block;
+	position: relative;
+	margin-right: 7px;
+	cursor: pointer;
+	transition: 0.4s;
+	opacity: 0.3;
+
+	background: white;
+	height: 10px;
+	width: 10px;
+}
+
+.header-question:hover {
+	opacity: 1;
+}
+
+.header-name {
+	opacity: 0.3;
+	display: inline-block;
+}
+
 
 
 

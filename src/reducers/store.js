@@ -6,6 +6,7 @@ import active_window from './active/activeWindowReducer';
 import active_tab from './active/activeTabReducer';
 import search from './searchReducer';
 import controls from './controlReducer';
+import modal_display from './modalReducer';
 
 
 /*
@@ -16,6 +17,7 @@ Active Tab     = obj: { window_id: tab_id }
 Active Window  = sym: window_id
 Controls       = obj: { cntrl_signal: int }
 Search         = obj: { url: url_path, ctrl: bool }
+Modal Display  = str: 'none' or 'block'
 */
 
 
@@ -26,7 +28,8 @@ const starting_obj = {
 	active_tab: {},
 	controls: {},
 	search: {},
-	active_window: 0
+	active_window: 0,
+	modal_display: "none"
 }
 const rootReducer = combineReducers({ live_windows, 
 									  live_tabs, 
@@ -34,7 +37,8 @@ const rootReducer = combineReducers({ live_windows,
 									  active_window, 
 									  active_tab,
 									  controls,
-									  search });
+									  search,
+									  modal_display });
 
 const store = createStore(rootReducer, starting_obj);
 
