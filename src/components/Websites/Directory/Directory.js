@@ -8,6 +8,8 @@ import './Directory.css';
 
 const Directory = (props) => {
 
+	props.setDisplayUrl();
+
 	let list_of_webnames = [];
 
 	for (let key in master_list) {
@@ -32,12 +34,17 @@ const Directory = (props) => {
 const mapDispatchToProps = dispatch => {
   return {
     search_request: (request) => {
-      dispatch(
-      {
-        type: "SEARCH-REQUEST", 
-        payload: request
-      });
-    }
+    	dispatch({
+        	type: "SEARCH-REQUEST", 
+        	payload: request
+      	});
+    },
+    setDisplayUrl: () => {
+    	dispatch({
+			type:"SET-DISPLAY-URL",
+			payload: "https://directory.edu"
+		});
+	}
   }
 };
 

@@ -1,3 +1,10 @@
+/*
+	black: 292F36;
+	blue: 4ECDC4;
+	white: FFFFFF;
+	red: FF6B6B;
+*/
+
 const styles = {
 	"home": {
 		"search": {
@@ -13,23 +20,25 @@ const styles = {
 			},
 			"fontClr": "#d5d5d3",
 			"exitClr": "#ffffff"
-		}
+		},
+		"contentClr": "#252525"
 	},
 	"about": {
 		"search": {
-			"backBarClr":  "#01395e",
-			"fontClr":     "#01395e",
+			"backBarClr":  "#292F36",
+			"fontClr":     "#292F36",
 			"frontBarClr": "#ffffff"
 		},
 		"tab": {
-			"bodyClr": "#01395e",
+			"bodyClr": "#292F36",
 			"favicon": {
-				"name": "fa fa-home", 
-				"color": "red"
+				"name": "fa fa-question", 
+				"color": "FFFFFF"
 			},
 			"fontClr": "#ffffff",
-			"exitClr": "#fd4445"
-		}
+			"exitClr": "#FF6B6B"
+		},
+		"contentClr": "#FFFFFF"
 	},
 	"directory": {
 		"search": {
@@ -45,7 +54,8 @@ const styles = {
 			},
 			"fontClr": "#f3f3f3",
 			"exitClr": "#f74464"
-		}
+		},
+		"contentClr": "#c4c4c4"
 	}
 };
 

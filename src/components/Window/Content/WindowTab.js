@@ -12,7 +12,8 @@ class WindowTab extends Component {
 
     this.state = { is_active_tab: this.props.active_id === this.props.tid,
                    tab_title: contentList[this.props.my_url]['tab-header'],
-                   search_url: this.props.my_url };
+                   search_url: this.props.my_url,
+                   history: ["home"] };
 	}
 
   componentDidMount() {
@@ -22,8 +23,14 @@ class WindowTab extends Component {
 
       let search_url = store.getState().tabURL[this.props.tid];
       let tab_title = contentList[search_url]['tab-header']; 
+      let history = [...this.state.history];
 
-      this.setState({is_active_tab, tab_title, search_url});
+      // If they went to a new page
+      if (search_url !== this.state.search_url) {
+        history.unshift(search_url);
+      }
+      
+      this.setState({is_active_tab, tab_title, search_url, history});
     });
   }
 

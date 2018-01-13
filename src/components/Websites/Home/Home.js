@@ -10,6 +10,8 @@ class Home extends Component {
 		this.state = {
 			inputValue: "",
 		}
+
+		props.setDisplayUrl();
 	}
 
 	handleSearchButton(e) {
@@ -62,6 +64,12 @@ const mapDispatchToProps = dispatch => {
         type: "SEARCH-REQUEST", 
         payload: request
       });
+    },
+    setDisplayUrl: () => {
+    	dispatch({
+    		type: "SET-DISPLAY-URL",
+    		payload: "https://home.com"
+    	})
     }
   }
 };

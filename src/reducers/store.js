@@ -5,20 +5,25 @@ import tabURL from './tabURLReducer';
 import active_window from './active/activeWindowReducer';
 import active_tab from './active/activeTabReducer';
 import search from './searchReducer';
-import controls from './controlReducer';
 import modal_display from './modalReducer';
+import display_url from './displayURLReducer';
 
 
 /*
 Live Windows   = obj: { "windows": { window_id: window_jsx }, "order": [window_id_first, etc] }
 Live Tabs      = obj: { window_id: [[ tab_id, tab_jsx ], [ tab_id, tab_jsx ]] }
-Tab URL        = obj: { tab_id: url }
+Tab URL        = obj: { tab_id: key_url }
+Dis URL        = str: display_url
 Active Tab     = obj: { window_id: tab_id }
 Active Window  = sym: window_id
-Controls       = obj: { cntrl_signal: int }
-Search         = obj: { url: url_path, ctrl: bool }
+Search         = obj: { url: key_url, ctrl: bool }
 Modal Display  = str: 'none' or 'block'
 */
+
+/* Notes */
+// All webpages are responsible for setting their display_url.
+// the key_url is internal to the webpage and used as the key
+// for the styles and content managment object.
 
 
 const starting_obj = {
@@ -26,19 +31,19 @@ const starting_obj = {
 	live_tabs: {},
 	tabURL: {},
 	active_tab: {},
-	controls: {},
 	search: {},
 	active_window: 0,
-	modal_display: "none"
+	modal_display: "none",
+	display_url: ""
 }
 const rootReducer = combineReducers({ live_windows, 
 									  live_tabs, 
 									  tabURL,
 									  active_window, 
 									  active_tab,
-									  controls,
 									  search,
-									  modal_display });
+									  modal_display,
+									  display_url });
 
 const store = createStore(rootReducer, starting_obj);
 

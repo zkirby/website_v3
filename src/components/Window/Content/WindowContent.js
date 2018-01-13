@@ -45,11 +45,14 @@ class WindowContent extends Component {
 			         	curr_width: this.default.width,
 			         	search_content: this.props.search_content["url"],
 			         	search_state: this.props.search_content["ctrl"],
-			         	tab_urls: this.props.tab_urls
+			         	tab_urls: this.props.tab_urls,
+			         	display_url: this.props.display_url
 			         };
 			         
 		// needed for ctrl+t/w 
 		this.prev_key = 0;
+		// need for tab tracking
+		this.tab_bodies = [];
 	}
 
 	componentDidMount() {
@@ -61,22 +64,26 @@ class WindowContent extends Component {
 			let new_search_content = store.getState().search["url"];
 			let new_search_state = store.getState().search["ctrl"];
 			let new_tab_urls = store.getState().tabURL;
+			let new_display_url = store.getState().display_url;
 
 			this.setState({ current_tabs: new_state_tabs,
 							is_active: new_active_window,
 							active_tab: new_active_tab,
 							search_content: new_search_content,
 							search_state: new_search_state,
-							tab_urls: new_tab_urls });
+							tab_urls: new_tab_urls,
+							display_url: new_display_url });
 		});
 
 		this.spawn_new_tab();
 	}
 
 	spawn_new_tab() {
-		let tab_id = this.props.spawnDefaultTab();
-		this.props.focusTab(tab_id);
-		this.props.setTabURL(tab_id, "home");
+		if (this.tab_bodies.length < 3) {
+			let tab_id = this.props.spawnDefaultTab();
+			this.props.focusTab(tab_id);
+			this.props.setTabURL(tab_id, "home");
+		}
 	}
 
 	componentWillUnmount() {
@@ -127,9 +134,7 @@ class WindowContent extends Component {
 			if (this.prev === 17 && this.state.is_active) {
 				switch (curr_key) {
 					case (84): 
-						if (this.tab_bodies.length < 3) {
-							this.spawn_new_tab();
-						}
+						this.spawn_new_tab();
 						break;
 					case (87):
 						this.props.killTab(this.state.active_tab);
@@ -151,13 +156,15 @@ class WindowContent extends Component {
 
 	render() {	
 
-		let active_url = this.state.tab_urls[this.state.active_tab];
+		const { tab_urls, display_url, active_tab, curr_height, curr_width } = this.state;
+		const key_url = tab_urls[active_tab];
 
-		const ref = contentList[active_url];
+		const ref = contentList[key_url];
 		const content = ref["content"];
 
 		const { backBarClr, fontClr, frontBarClr } = ref["styles"]["search"];
 		const { bodyClr } = ref["styles"]["tab"];
+		const contentClr = ref["styles"]["contentClr"];
 
 		return (
 			<Rnd default={{x: 300, y: 70, height: this.default.height, width: this.default.width}} 
@@ -168,18 +175,19 @@ class WindowContent extends Component {
 				});
 			}} minWidth="300" minHeight="300">
 		      	<div className="WindowContent" onClick={(e)=>{this.hasFocus(e)}}>
-		      		<div className="tab-spine" style={{width: this.state.curr_width + "px"}}>
+		      		<div className="tab-spine" style={{width: curr_width + "px"}}>
 		      			{ this.tab_bodies }
 		      			<div onClick={(e)=>{this.spawn_new_tab(e)}} className="tab-spawn" style={{background: bodyClr}}></div>
 		      		</div>
-		      		<div className="search" style={{width: this.state.curr_width + "px", background:backBarClr}}>
-		      			<div className="search-content" style={{width: (this.state.curr_width - 90) + "px", background:frontBarClr, color:fontClr}}> 
-		      				<div style={{width: '100%', height: '100%', top: '-1px', position: 'relative'}}>https://{ active_url === undefined ? "404" : active_url }.com</div>
+		      		<div className="search" style={{width: curr_width + "px", background:backBarClr}}>
+		      			<div className="search-content" style={{width: (curr_width - 90) + "px", background:frontBarClr, color:fontClr}}> 
+		      				<div style={{width: '100%', height: '100%', top: '-1px', position: 'relative'}}> { display_url === undefined ? "https://404.com" : display_url }</div>
 		      			 </div>
 		      		</div>
 		      		<div className="content" 
-		      			style={{width: this.state.curr_width + "px",
-		      					height: this.state.curr_height-40 + "px" }}>
+		      			style={{width: curr_width + "px",
+		      					height: curr_height-40 + "px",
+		      					background: contentClr }}>
 		      			{ content }
 		      		</div>
 		      	</div>
@@ -195,11 +203,12 @@ const mapStateToProps = (state, ownProps) => ({
 	active_window: state.active_window === ownProps.wid,
 	active_tab: state.active_tab[ownProps.wid],
 	search_content: state.search,
-	tab_urls: state.tabURL
+	tab_urls: state.tabURL,
+	display_url: state.display_url
 
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+	const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     killWindow: () => {
       dispatch({
