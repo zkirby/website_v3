@@ -3,7 +3,7 @@ import Particles from 'react-particles-js';
 import { connect } from 'react-redux';
 import { Route, NavLink } from 'react-router-dom';
 import { MemoryRouter } from 'react-router';
-import { Card, Popup } from 'semantic-ui-react';
+import { Card } from 'semantic-ui-react';
 
 // SVGs
 import codefightssvg from './SVGs/codefights';

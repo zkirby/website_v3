@@ -56,6 +56,23 @@ const styles = {
 			"exitClr": "#f74464"
 		},
 		"contentClr": "#c4c4c4"
+	},
+	"404": {
+		"search": {
+			"backBarClr":  "#090C02",
+			"fontClr":     "#090C02",
+			"frontBarClr": "#D1D1D1"
+		},
+		"tab": {
+			"bodyClr": "#090C02",
+			"favicon": {
+				"name": "fa fa-exclamation-triangle", 
+				"color": "#FF0022"
+			},
+			"fontClr": "#D1D1D1",
+			"exitClr": "#FF0022"
+		},
+		"contentClr": "#FFFFFF"
 	}
 };
 
@@ -64,3 +81,4 @@ export default styles;
 /*
 directory - 35
 */
+

@@ -1,0 +1,36 @@
+.FOF-text-large {
+	font-size: 100px;
+    text-align: center;
+    position: relative;
+    top: 135px;
+    font-weight: bold;
+    color: #090C02;
+    transition: 0.4s;
+}
+
+.FOF-text-large:hover {
+	transform: scale(1.1, 1.1);
+}
+
+.FOF-text-small {
+    position: relative;
+    font-size: 25px;
+    top: 200px;
+    width: 60%;
+    margin: 0 auto;
+    color: #273043;
+    line-height: 30px;
+    margin-bottom: 20px;
+}
+
+.FOF-directory {
+	display: inline-block;
+	color: #FF0022;
+	opacity: 0.5;
+	cursor: pointer;
+	transition: 0.2s;
+}
+
+.FOF-directory:hover {
+	opacity: 1;
+}
