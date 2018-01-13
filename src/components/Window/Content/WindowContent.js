@@ -21,8 +21,11 @@ show the exact same thing
 of another different window.
 
 [DONE] TODO - add support for favicons
-TODO - finish header and footer
-TODO - finish about website
+[DONE] TODO - finish header and footer
+[DONE] TODO - finish about website
+TODO - Add bookmarks to header
+TODO - Fix drag window out of frame
+TODO - Fix refresh on click of tab
 */
 
 

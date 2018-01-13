@@ -27,5 +27,5 @@ const mapDispatchToProps = (dispatch) => {
 	}
 } 
 
-export default connect(()=>{}, mapDispatchToProps)(Game);
+export default connect(()=>({}), mapDispatchToProps)(Game);
 

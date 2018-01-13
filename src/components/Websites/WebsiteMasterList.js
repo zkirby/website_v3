@@ -31,7 +31,7 @@ const master_list = {
 	'resume': {
 		"content": <ResumePage />,
 		"tab-header": "resume",
-		"styles": styleguide['home']
+		"styles": styleguide['resume']
 	},
 	'directory': {
 		"content": <DiretoryPage />,
@@ -46,7 +46,7 @@ const master_list = {
 	'game': {
 		"content": <GamePage />,
 		"tab-header": "By Zach and Emily",
-		"styles": styleguide['directory']
+		"styles": styleguide['game']
 	},
 	'projects': {
 		"content": <ProjectsPage />,

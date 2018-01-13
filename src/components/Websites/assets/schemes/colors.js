@@ -42,20 +42,54 @@ const styles = {
 	},
 	"directory": {
 		"search": {
-			"backBarClr":  "#374258",
-			"fontClr":     "#6a7285",
-			"frontBarClr": "#c4c4c4"
+			"backBarClr":  "#FDFFFC",
+			"fontClr":     "#FDFFFC",
+			"frontBarClr": "#011627"
 		},
 		"tab": {
-			"bodyClr": "#6a7285",
+			"bodyClr": "#FDFFFC",
 			"favicon": {
-				"name": "fa fa-home", 
-				"color": "red"
+				"name": "fa fa-archive", 
+				"color": ""
 			},
-			"fontClr": "#f3f3f3",
-			"exitClr": "#f74464"
+			"fontClr": "#011627",
+			"exitClr": "#F71735"
 		},
-		"contentClr": "#c4c4c4"
+		"contentClr": "#011627"
+	},
+	"game": {
+		"search": {
+			"backBarClr":  "#444444",
+			"fontClr":     "#252525",
+			"frontBarClr": "#d5d5d3"
+		},
+		"tab": {
+			"bodyClr": "#252525",
+			"favicon": {
+				"name": "fa fa-gamepad", 
+				"color": "#d5d5d3"
+			},
+			"fontClr": "#d5d5d3",
+			"exitClr": "#ffffff"
+		},
+		"contentClr": "#252525"
+	},
+	"resume": {
+		"search": {
+			"backBarClr":  "#444444",
+			"fontClr":     "#252525",
+			"frontBarClr": "#d5d5d3"
+		},
+		"tab": {
+			"bodyClr": "#252525",
+			"favicon": {
+				"name": "fa fa-file", 
+				"color": "#d5d5d3"
+			},
+			"fontClr": "#d5d5d3",
+			"exitClr": "#ffffff"
+		},
+		"contentClr": "#252525"
 	},
 	"404": {
 		"search": {

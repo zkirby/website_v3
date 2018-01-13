@@ -9,40 +9,51 @@ lightest: f3f3f3
 */
 
 .directory-body {
-	background: #c4c4c4;
+	background: #011627;
 }
 
 .directory-header-text {
-	top: 10%;
+	top: 20%;
     position: relative;
     font-weight: bold;
-    font-size: 40px;
-    color: #374258;
+    font-size: 65px;
+    color: #FDFFFC;
 }
 
 .directory-body-text {
-	font-size: 20px;
-	top: 15%;
+    font-size: 20px;
+    top: 27%;
     position: relative;
-    color: #6a7285;
+    color: #FF9F1C;
+    width: 80%;
+    margin: 0 auto;
+    opacity: 0.8;
 }
 
 .directory-web-list {
-	position: relative;
-    top: 16%;
-    font-size: 20px;
+    position: relative;
+    top: 33%;
+    font-size: 35px;
     text-align: left;
-    left: 2%;
-    line-height: 33px;
-   	cursor: pointer;
-    width: fit-content;
+    margin: 0 auto;
+    line-height: 75px;
+    width: 80%;
+    cursor: pointer;
 }
 
-.directory-web-list li {
+.directory-web-list-item {
 	transition: 0.1s;
 	color: #374258;
+    display: inline-block;
+    margin-left: 50px;
 }
 
-.directory-web-list li:hover {
+.directory-web-list-item:hover {
 	color: #f74464;
+}
+
+.directory-favicon {
+    margin-right: 10px;
+    position: relative;
+    top: 1px;
 }

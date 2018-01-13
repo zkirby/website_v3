@@ -14,7 +14,13 @@ const Directory = (props) => {
 
 	for (let key in master_list) {
 		if (key !== "undefined") {
-			list_of_webnames.push(<li onClick={ ()=>{ props.search_request(key) } } key={ uuidv1() }> { key } </li>);
+			list_of_webnames.push(<div className="directory-web-list-item" 
+				 					   onClick={ ()=>{ props.search_request(key) } } 
+				 					   key={ uuidv1() }> 
+				 					   		<i className={ master_list[key]["styles"]["tab"]["favicon"]["name"] + " directory-favicon" } 
+				 					   		   aria-hidden='true'></i> 
+				 					   		{ key } 
+				 				  </div>);
 		}
 	}
 
@@ -26,7 +32,7 @@ const Directory = (props) => {
 	  		this browser is listed below. To visit the 
 	  		website simply click on the name.
 	  	</div>
-	  	<ul className="directory-web-list">{ list_of_webnames }</ul>
+	  	<div className="directory-web-list">{ list_of_webnames }</div>
 	  </div>
   )
 }	
