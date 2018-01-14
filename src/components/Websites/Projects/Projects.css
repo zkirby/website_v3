@@ -40,6 +40,12 @@
 	background: #FF1461;
 }
 
+.projects-button-active-0 {
+	color: black;
+	font-weight: bold;
+	background: #FF1461;
+}
+
 .pb2 {
 	color: #18FF92;
 	border: 5px solid #18FF92;
@@ -50,11 +56,23 @@
 	font-weight: bold;
 	background: #18FF92;
 }
+
+.projects-button-active-1 {
+	color: black;
+	font-weight: bold;
+	background: #18FF92;
+}
+
 .pb3 {
 	color: #5A87FF;
 	border: 5px solid #5A87FF;
 }
 .pb3:hover {
+	color: black;
+	font-weight: bold;
+	background: #5A87FF;
+}
+.projects-button-active-2 {
 	color: black;
 	font-weight: bold;
 	background: #5A87FF;

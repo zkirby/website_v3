@@ -20,7 +20,8 @@ class Projects extends Component {
 						colors: ['#FF1461', '#18FF92', '#5A87FF', '#FBF38C'],
 						tap: null,
 						ctx: null,
-						render: null
+						render: null,
+						active_projects: ["", "", ""]
 					 };
 	}
 
@@ -157,20 +158,36 @@ class Projects extends Component {
   		this.animateParticules(pointerX, pointerY);
 	}
 
+	toggleActive(active) {
+		const { active_projects } = this.state;
+		let active_state = active_projects[active];
+		if (active_state === "") {
+			active_state = "projects-button-active-"+(active);
+		} else {
+			active_state = "";
+		}
+
+		active_projects[active] = active_state;
+
+		this.setState({ active_projects });
+	} 
+
 	render() {
+
+		const { active_projects } = this.state;
 
 		return (
 	  		<div style={{height: "100%", width: "100%"}} onMouseMove={(e)=>{this.updateCoords(e)}}>
 	  			
 
 	  			<div className="projects-button-spine" onClick={(e)=>{this.playAnimation(e)}}>
-					<div className="projects-button pb1">
-						<div className="projects-button-inner">code</div>
+					<div className={"projects-button pb1 " + active_projects[0] }onClick={()=>{this.toggleActive(0)}}>
+						<div className="projects-button-inner" >code</div>
 					</div>
-					<div className="projects-button pb2">
+					<div className={"projects-button pb2 " + active_projects[1] } onClick={()=>{this.toggleActive(1)}}>
 						<div className="projects-button-inner">web</div>
 					</div>
-					<div className="projects-button pb3">
+					<div className={"projects-button pb3 " + active_projects[2] } onClick={()=>{this.toggleActive(2)}}>
 						<div className="projects-button-inner">other</div>
 					</div>
 				</div>
