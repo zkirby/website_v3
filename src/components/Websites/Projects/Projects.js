@@ -51,7 +51,6 @@ class Projects extends Component {
 	updateCoords(e) {
   		let pointerX = (e.clientX || e.touches[0].clientX)-300;
   		let pointerY = (e.clientY || e.touches[0].clientY)-130;
-
   		this.setState({ pointerY, pointerX });
   	}
 
@@ -162,7 +161,21 @@ class Projects extends Component {
 
 		return (
 	  		<div style={{height: "100%", width: "100%"}} onMouseMove={(e)=>{this.updateCoords(e)}}>
-	  			<canvas width="100%" height="100%" style={{height: "100%", width: "100%", background:"black"}}
+	  			
+
+	  			<div className="projects-button-spine" onClick={(e)=>{this.playAnimation(e)}}>
+					<div className="projects-button pb1">
+						<div className="projects-button-inner">code</div>
+					</div>
+					<div className="projects-button pb2">
+						<div className="projects-button-inner">web</div>
+					</div>
+					<div className="projects-button pb3">
+						<div className="projects-button-inner">other</div>
+					</div>
+				</div>
+
+				<canvas width="100%" height="100%" style={{height: "100%", width: "100%"}}
 	  					className="fireworks"
 	  					ref="canvas"
 	  					onClick={(e)=>{this.playAnimation(e)}}>

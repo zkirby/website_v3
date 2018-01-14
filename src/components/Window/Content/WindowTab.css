@@ -44,6 +44,9 @@ clr1
     cursor: default;
     height: 19px;
     text-align: left;
+
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .tab {

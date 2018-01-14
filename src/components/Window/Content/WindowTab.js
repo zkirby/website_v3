@@ -32,6 +32,7 @@ class WindowTab extends Component {
       
       this.setState({is_active_tab, tab_title, search_url, history});
     });
+
   }
 
   componentWillUnmount() {

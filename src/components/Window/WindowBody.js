@@ -16,8 +16,7 @@ and then just update the index, then sort on the index and
 use that to determine the order by rendering them in that order. 
 [DONE] TODO: fix the hover effect on the question mark on the header bar
 [DONE] TODO: Fix modal
-
-TODO: Make 404 page 
+[DONE] TODO: Make 404 page 
 
 */
 class WindowBody extends Component {

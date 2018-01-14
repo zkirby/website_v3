@@ -93,20 +93,20 @@ const styles = {
 	},
 	"projects": {
 		"search": {
-			"backBarClr":  "#444444",
+			"backBarClr":  "black",
 			"fontClr":     "#252525",
-			"frontBarClr": "#d5d5d3"
+			"frontBarClr": "white"
 		},
 		"tab": {
-			"bodyClr": "#252525",
+			"bodyClr": "black",
 			"favicon": {
 				"name": "fa fa-folder", 
 				"color": "#d5d5d3"
 			},
-			"fontClr": "#d5d5d3",
-			"exitClr": "#ffffff"
+			"fontClr": "white",
+			"exitClr": "#FF1461"
 		},
-		"contentClr": "#252525"
+		"contentClr": "black"
 	},
 	"404": {
 		"search": {

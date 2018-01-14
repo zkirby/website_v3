@@ -26,6 +26,7 @@ of another different window.
 TODO - Add bookmarks to header
 TODO - Fix drag window out of frame
 TODO - Fix refresh on click of tab
+TODO - Fix window starting off in center of page
 */
 
 
