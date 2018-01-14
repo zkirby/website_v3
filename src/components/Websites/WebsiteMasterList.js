@@ -51,7 +51,7 @@ const master_list = {
 	'projects': {
 		"content": <ProjectsPage />,
 		"tab-header": "projects",
-		"styles": styleguide['directory']
+		"styles": styleguide['projects']
 	},
 	[undefined]: {
 		"content": <FOFPage />,

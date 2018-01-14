@@ -91,6 +91,23 @@ const styles = {
 		},
 		"contentClr": "#252525"
 	},
+	"projects": {
+		"search": {
+			"backBarClr":  "#444444",
+			"fontClr":     "#252525",
+			"frontBarClr": "#d5d5d3"
+		},
+		"tab": {
+			"bodyClr": "#252525",
+			"favicon": {
+				"name": "fa fa-folder", 
+				"color": "#d5d5d3"
+			},
+			"fontClr": "#d5d5d3",
+			"exitClr": "#ffffff"
+		},
+		"contentClr": "#252525"
+	},
 	"404": {
 		"search": {
 			"backBarClr":  "#090C02",
@@ -115,4 +132,6 @@ export default styles;
 /*
 directory - 35
 */
+
+
 
