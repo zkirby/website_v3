@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+//import ReactDOM from 'react-dom';
 import Rnd from 'react-rnd';
 import { connect } from 'react-redux';
 import uuidv1 from 'uuid/v1';
@@ -11,20 +12,19 @@ import contentList from '../../Websites/WebsiteMasterList';
 import './WindowContent.css';
 
 /*
-BUG - error's on contentList[active_url] with active_url = undefined for
+[FIXED] BUG - error's on contentList[active_url] with active_url = undefined for
 some unknown reason.
-
-BUG - all of the searchs for a given window 
+[FIXED] BUG - all of the searchs for a given window 
 show the exact same thing
-
 [FIXED] BUG - hitting search on one window changes the search 
 of another different window.
 
 [DONE] TODO - add support for favicons
 [DONE] TODO - finish header and footer
 [DONE] TODO - finish about website
+[DONE] TODO - Fix drag window out of frame
+
 TODO - Add bookmarks to header
-TODO - Fix drag window out of frame
 TODO - Fix refresh on click of tab
 TODO - Fix window starting off in center of page
 */
@@ -40,7 +40,7 @@ class WindowContent extends Component {
 			height: 500,
 			width: 730
 		}
-
+ 
 		this.state = {
 			         	is_active: this.props.active_window, 
 			         	current_tabs: this.props.current_tabs,
@@ -50,7 +50,9 @@ class WindowContent extends Component {
 			         	search_content: this.props.search_content["url"],
 			         	search_state: this.props.search_content["ctrl"],
 			         	tab_urls: this.props.tab_urls,
-			         	display_url: this.props.display_url
+			         	display_url: this.props.display_url,
+			         	startingX: 0,
+			         	startingY: 0,
 			         };
 			         
 		// needed for ctrl+t/w 
@@ -80,6 +82,14 @@ class WindowContent extends Component {
 		});
 
 		this.spawn_new_tab();
+
+		// Get midpoint of element
+		// const { element } = this.refs;
+		// const {left, top} = ReactDOM.findDOMNode(element).getBoundingClientRect();
+		// const startingX = left + (window.innerWidth/2);
+		// const startingY = top + (window.innerHeight/2);
+		// this.setState({ startingX, startingY });
+		// console.log(startingX, startingY);
 	}
 
 	spawn_new_tab() {
@@ -173,11 +183,16 @@ class WindowContent extends Component {
 		return (
 			<Rnd default={{x: 300, y: 70, height: this.default.height, width: this.default.width}} 
 			     onResize={(e, direction, ref, delta, position)=>{
-				this.setState({
-					curr_width: ref.offsetWidth,
-					curr_height: ref.offsetHeight
-				});
-			}} minWidth="300" minHeight="300">
+				 this.setState({
+					  curr_width: ref.offsetWidth,
+					  curr_height: ref.offsetHeight
+				  });
+			    }} 
+			    minWidth="300" 
+			    minHeight="300"
+			    cancel=".body"
+			    ref="element"
+			    >
 		      	<div className="WindowContent" onClick={(e)=>{this.hasFocus(e)}}>
 		      		<div className="tab-spine" style={{width: curr_width + "px"}}>
 		      			{ this.tab_bodies }
