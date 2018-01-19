@@ -63,7 +63,7 @@ class WindowBody extends Component {
 
   render() {
 
-    const { show_modal } = this.props; 
+    const { show_modal, search_request } = this.props; 
 
     let render_middle = <div></div>;
     if (this.live_windows.length === 0) {
@@ -74,7 +74,13 @@ class WindowBody extends Component {
 
     return (
       <div style={{height: "100%", width: "100%"}}>
-        <div id="header-spine">
+        <div id="left-header-spine">
+            <div className="left-header-spine-item">Bookmarks:</div>
+            <div className="left-header-spine-item left-header-clickable" onClick={ ()=>{ search_request("directory") }}>directory,</div>
+            <div className="left-header-spine-item left-header-clickable" onClick={ ()=>{ search_request("home")} }>home,</div>
+            <div className="left-header-spine-item left-header-clickable" onClick={ ()=>{ search_request("about")} }>about</div>
+        </div>
+        <div id="right-header-spine">
           <i className="fa fa-question-circle-o header-question" aria-hidden="true" onClick={()=>{show_modal()}}></i>
           <div className="header-name">Zachary Kirby</div>
         </div>
@@ -102,6 +108,17 @@ const mapDispatchToProps = dispatch => {
       {
         type:"SPAWN-WINDOW", 
         payload: [window_id, <WindowContent key={ uuidv1() } wid={ window_id }/>]
+      });
+      dispatch({
+        type:"NEW-ACTIVE-WINDOW",
+        payload: window_id
+      })
+    },
+    search_request: (request) => {
+      dispatch(
+      {
+        type: "SEARCH-REQUEST", 
+        payload: request
       });
     },
     show_modal: () => {

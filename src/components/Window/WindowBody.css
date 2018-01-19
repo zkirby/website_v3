@@ -10,7 +10,6 @@
 	leading - font-family: 'Istok Web', sans-serif;
 	body    - font-family: 'Lora', serif;
 
-
 */
 .new-tab-text {
 	font-size: 40px;
@@ -22,10 +21,11 @@
 	width: 100%;
 }
 
-#header-spine, #footer-spine {
+#right-header-spine, #footer-spine, #left-header-spine {
 	position: absolute;
 	font-size: 12px;
 	color: white;
+	z-index: 100;
 }
 
 #footer-spine {
@@ -34,10 +34,9 @@
 	opacity: 0.3;
 }
 
-#header-spine {
+#right-header-spine {
 	top: 1%;
 	right: 1%;
-	z-index: 100;
 }
 
 .header-question {
@@ -57,6 +56,34 @@
 	opacity: 0.3;
 	display: inline-block;
 }
+
+#left-header-spine {
+	top: 1%;
+	left: 1%;
+}
+
+.left-header-spine-item {
+	display: inline-block;
+	opacity: 0.3;
+	margin-right: 7px;
+}
+
+
+.left-header-spine-item:nth-child(1) {
+	font-weight: bold;
+	opacity: 0.4;
+}
+
+.left-header-clickable {
+	cursor: pointer;
+	transition: 0.4s;
+}
+
+.left-header-clickable:hover {
+	opacity: 1;
+}
+
+
 
 
 

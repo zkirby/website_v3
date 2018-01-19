@@ -9,6 +9,7 @@ class Home extends Component {
 		super(props);
 		this.state = {
 			inputValue: "",
+			valid_ext: ["io, com, edu"]
 		}
 
 		props.setDisplayUrl();
@@ -16,13 +17,21 @@ class Home extends Component {
 
 	handleSearchButton(e) {
 		e.stopPropagation();
-		this.props.search_request(this.state.inputValue);
+		this.props.search_request(this.prune_request(this.state.inputValue));
 	}
 
 	handleSearchInput(e) {
 		if (e.key === 'Enter') {
-			this.props.search_request(this.state.inputValue);
+			this.props.search_request(this.prune_request(this.state.inputValue));
 		}
+	}
+
+	prune_request(request) {
+		// const { valid_ext } = this.state;
+
+		// let check_dot = request.indexOf(".");
+		
+		return request;
 	}
 
 	render() {
